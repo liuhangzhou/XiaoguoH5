@@ -1,0 +1,71 @@
+<template>
+  <div class="warper">
+    <div class="payment-main">
+      <div class="payment-number">
+        <p class="textCenter" style="font-size:.24rem;">韩国烤肉（中山公园店）</p>
+        <p  class="textCenter textH4 colorRed">$233.40</p>
+      </div>
+      <!-- <div class="youhuiquan flex flex-vc flex-sc">
+        <p>优惠券</p>
+        <p class="youhuiquan-p2">暂无可用</p>
+      </div> -->
+      <div class="payment-box">
+  
+        <div class="payment-mode flex flex-hc flex-vc">支付方式</div>
+        <div class="payment-item flex flex-vc flex-sc">
+          <p>Credit/Debit Card</p>
+          <div></div>
+        </div>
+        <div class="payment-url flex flex-vc flex-sc">
+          <p class="flex flex-vc"><i></i>微信支付</p>
+          <input type="checkbox" id="put">
+          <label for="put"></label>
+        </div>
+      </div>
+      <div class="payBtn textCenter" @click="goPay">确认支付</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { post } from "@/net/http"
+import api from "@/net/api"
+export default {
+  name: 'pay',
+  data: () => {
+    return {
+      showCart: false,
+      tradeIds:[]	,//订单号，多个以英文逗号隔开
+      couponId:''		,//	否 使用的优惠券id
+      realAmount:''		,//是 	用券后的实付金额
+      payType:'',//是 bank网银支付；wechat微信支付（暂不支持）
+      returnUrl	:'',// 否	同步回调地址
+      cancelUrl:'',//否 取消地址
+    }
+  },
+  methods: {
+     async queryPay(params) {
+      try {
+        const data = await post(api.queryPay, params)
+        // const { attributeList = [] } = data
+        // attributeList.forEach(attribute => {
+        //   const { optionList = [] } = attribute
+        //   optionList.forEach(option => this.$set(option, 'isSelected', false))
+        // })
+        // this.setDetailInformation(data)
+      } catch (e) {
+        console.log('e', e)
+      }
+    },
+    goPay () {
+      // this.queryPay()
+      
+      this.$router.push('/orderStatus')
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
