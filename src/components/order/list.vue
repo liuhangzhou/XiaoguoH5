@@ -22,6 +22,14 @@
               <p class="goods-remarks">{{ product.remark }}</p>
               <p class="goods-monery">{{ product.price }}</p>
             </div>
+            <div
+              class="minus-goods"
+              @click="minusInCart(item, product)"
+              v-if="product.count"
+            />
+            <p class="goods-num" v-if="product.count">
+              {{ product.count }}
+            </p>
             <div class="add-goods" @click="addInCart(item, product)"></div>
           </li>
         </ul>
@@ -84,6 +92,34 @@ export default {
         }
         this.setCatProduct(this.cartFood)
       }
+      console.log(item, product.haveAttribute)
+    },
+    minusInCart(item, product) {
+      console.log(product.productId)
+      // console.log('进入购物车', productId)
+      this.categoryList.forEach((item) => {
+        if (item.categoryId === product.productId) {
+          if (!item.count) {
+            this.$set(item, 'count', 1)
+          } else {
+            item.count--
+          }
+          this.category = this.categoryList
+        }
+      })
+      this.setCategoryList(this.category)
+      if (product.count === 1) {
+        this.$set(product, 'count', 0)
+        this.cartFood.splice(product)
+      } else {
+        this.cartFood.forEach((v) => {
+          if (v.productId === product.productId) {
+            v.count--
+          }
+        })
+      }
+      this.setCatProduct(this.cartFood)
+
       console.log(item, product.haveAttribute)
     }
   }

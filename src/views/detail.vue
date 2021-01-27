@@ -27,7 +27,7 @@
 
       <div class="settlement">
         <div class="settlement-zd">
-          <div class="settlement-monery">$ 89.00</div>
+          <div class="settlement-monery">$ {{ amount }}</div>
           <div class="settlement-btn" @click="addInCart()">加入购物车</div>
         </div>
       </div>
@@ -56,7 +56,8 @@ export default {
         productId: this.$route.query.productId,
         selectedNum: 1,
         attributeList: []
-      }
+      },
+      amount: 0.0
     }
   },
   components: { Kv },
@@ -80,6 +81,8 @@ export default {
     async queryProductionDetail(params) {
       try {
         const data = await get(api.queryProductionDetail, params)
+        const { activePrice = Float32Array } = data
+        this.amount = activePrice
         const { attributeList = [] } = data
         attributeList.forEach((attribute) => {
           const { mustChoose = Boolean } = attribute
@@ -104,14 +107,12 @@ export default {
 
       var count = 0
       var leastChoose = attribute.leastChoose
-      console.log('leastChoose', leastChoose + '\t' + isSelected)
       const { optionList = [] } = attribute
       optionList.forEach((option) => {
         if (option.isSelected) {
           count = count + 1
         }
       })
-      console.log('count', count + '')
       if (isSelected) {
         if (leastChoose > 0 && count == leastChoose) {
           alert('最少选择' + leastChoose + '项')
@@ -121,10 +122,24 @@ export default {
       } else {
         this.$set(optionBean, 'isSelected', true)
       }
+      var addition = 0.0
+      optionList.forEach((option) => {
+        if (option.isSelected) {
+          addition = addition + option.optionPrice
+        }
+      })
+      this.amount = this.amount + addition
     },
 
     addInCart() {
-      this.$router.push({ path: '/home', query: { thisObject } })
+      const { attributeList = [] } = this.detailInformation
+      attributeList.forEach((attribute) => {
+        const { optionList = [] } = attribute
+        optionList.forEach((option) => {
+          console.log('add ', option.optionName + '\t' + option.isSelected)
+        })
+      })
+      // this.$router.push({ path: '/home', query: { thisObject } })
     }
   }
 }

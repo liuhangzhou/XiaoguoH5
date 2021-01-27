@@ -141,13 +141,14 @@ export default {
 .cart_num {
   position: absolute;
   content: '';
-  width: 0.7rem;
-  height: 0.7rem;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: 50%;
   background: #e74643;
   color: #fff;
   text-align: center;
-  line-height: 0.7rem;
-  right: 0;
+  line-height: 0.5rem;
+  right: 0.05rem;
+  top: 0.05rem;
 }
 </style>
