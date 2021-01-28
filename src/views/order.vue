@@ -6,10 +6,15 @@
       <ul class="details-item">
         <li class="flex" v-for="item in cartProduct" :key="item.productId">
           <div class="flex">
-            <div class="details-goods-img"></div>
+            <div class="details-goods-img">
+              <img :src="item.img0" alt="">
+            </div>
             <div class="details-text">
               <div class="details-text-p1">{{ item.productName }}</div>
-              <div class="details-text-p2">{{ item.remark }}</div>
+              <div class="details-text-p2" v-if="item.haveAttribute">
+                <span v-for="(attr,index) in item.attributes" :key="attr.id">{{attr.optionName}} <span v-if="index < item.attributes.length-1">/</span></span> 
+              </div>
+              <div class="details-text-p2" v-else>{{ item.remark }}</div>
             </div>
           </div>
           <div>

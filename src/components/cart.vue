@@ -5,7 +5,7 @@
       <div class="select-settlement" v-show="showCart">
         <div class="select-head flex flex-sc flex-vc">
           <div class="select-number">
-            Cart(<span>{{ '2' }}</span
+            Cart(<span>{{ cartProduct? cartProduct.length : '' }}</span
             >)
           </div>
           <div class="remove-select" @click="clearCart">清空</div>
@@ -17,13 +17,18 @@
           <ul>
             <li
               class="flex flex-vc"
-              v-for="item in cartProduct"
-              :key="item.productId"
+              v-for="(item,index) in cartProduct"
+              :key="index"
             >
-              <div class="select-img"></div>
+              <div class="select-img">
+                <img :src="item.img0" alt="">
+              </div>
               <div class="goods-text">
                 <p class="goods-name">{{ item.productName }}</p>
-                <p class="goods-remarks">{{ item.remark }}</p>
+                <p class="goods-remarks" v-if="item.haveAttribute">
+                  <span v-for="(attr,index) in item.attributes" :key="attr.id">{{attr.optionName}} <span v-if="index < item.attributes.length-1">/</span></span> 
+                </p>
+                <p class="goods-remarks"  v-else>{{ item.remark }}</p>
               </div>
               <div class="select-monery">{{ item.price }}</div>
               <div class="add-remove flex flex-sc flex-vc">
@@ -69,24 +74,10 @@ export default {
   },
   beforeUpdate() {
     console.log(this.cartProduct, 'cartProduct')
-    let num = 0
-    let price = 0
-    for (let i = 0; i < this.cartProduct.length; i++) {
-      num += Number(this.cartProduct[i].count)
-      price += Number(this.cartProduct[i].price) * this.cartProduct[i].count
-    }
-    this.totalPrice = Math.round(price * 100) / 100
-    if (this.totalPrice >= 50 && this.totalPrice <= 100) {
-      this.totalPrice - 5
-    }
-    if (this.totalPrice >= 100) {
-      this.totalPrice - 10
-    }
-    if (this.totalPrice >= 50) {
-      this.discount =
-        '已减5元,再买' + Number(100 - this.totalPrice) + '可减10元'
-    }
-    this.cartTotal = num
+    this.updatedCart()
+  },
+  mounted() {
+    this.updatedCart()
   },
   methods: {
     ...mapActions(['setCatProduct', 'setCategoryList']),
@@ -94,11 +85,32 @@ export default {
       this.categoryList.forEach((k, index) => {
         k.count = 0
       })
-      console.log(this.cartProduct, 'this.cartProduct')
-      this.cartProduct.forEach((v, index) => {
-        console.log(v, 'vvvvvvvvvv')
-        v.count = 0
-      })
+      // console.log(this.cartProduct, 'this.cartProduct')
+      this.setCatProduct([])
+      // this.cartProduct.forEach((v, index) => {
+      //   console.log(v, 'vvvvvvvvvv')
+      //   v.count = 0
+      // })
+    },
+    updatedCart() {
+      let num = 0
+      let price = 0
+      for (let i = 0; i < this.cartProduct.length; i++) {
+        num += Number(this.cartProduct[i].count)
+        price += Number(this.cartProduct[i].price) * this.cartProduct[i].count
+      }
+      this.totalPrice = Math.round(price * 100) / 100
+      if (this.totalPrice >= 50 && this.totalPrice <= 100) {
+        this.totalPrice - 5
+      }
+      if (this.totalPrice >= 100) {
+        this.totalPrice - 10
+      }
+      if (this.totalPrice >= 50) {
+        this.discount =
+          '已减5元,再买' + Number(100 - this.totalPrice) + '可减10元'
+      }
+      this.cartTotal = num
     },
     toggleCartDetail() {
       this.showCart = !this.showCart
@@ -119,11 +131,14 @@ export default {
             }
           })
         }
+        
       })
+      this.updatedCart()
     },
     add(productId) {
       this.cartProduct.forEach((v) => {
         if (v.productId === productId) {
+          console.log(v)
           v.count++
           this.categoryList.forEach((k, index) => {
             if (k.categoryId === productId) {
@@ -132,6 +147,7 @@ export default {
           })
         }
       })
+      this.updatedCart()
     }
   }
 }
@@ -149,5 +165,6 @@ export default {
   text-align: center;
   line-height: 0.7rem;
   right: 0;
+  font-size: 30px;
 }
 </style>

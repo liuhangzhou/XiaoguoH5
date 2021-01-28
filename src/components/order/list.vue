@@ -59,7 +59,6 @@ export default {
           query: { productId: product.productId }
         })
       } else {
-        console.log(product.productId)
         // console.log('进入购物车', productId)
         this.categoryList.forEach((item) => {
           if (item.categoryId === product.productId) {
@@ -72,6 +71,8 @@ export default {
           }
         })
         this.setCategoryList(this.category)
+        this.cartFood = this.cartProduct || [];
+        console.log(product)
         if (!product.count) {
           this.$set(product, 'count', 1)
           this.cartFood.push(product)

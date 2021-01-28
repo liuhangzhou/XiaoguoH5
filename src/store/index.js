@@ -12,7 +12,7 @@ export default new Vuex.Store({
     },
     list: [],
     storeCoupons: [],
-    categoryList: [{ categoryId: '', categoryName: '' }],
+    categoryList: [],
     currentCategoryId: '', // 当前类目
     detailInformation: {
       attributeList: [],

@@ -18,7 +18,7 @@
                 :class="{ current: option.isSelected }"
                 @click="selectProduct(info, option)"
               >
-                {{ option.optionName }}
+                {{ option.optionName }} <span v-if="option.optionPrice"></span>
               </li>
             </ul>
           </div>
@@ -27,7 +27,7 @@
 
       <div class="settlement">
         <div class="settlement-zd">
-          <div class="settlement-monery">$ 89.00</div>
+          <div class="settlement-monery">$ {{price}}</div>
           <div class="settlement-btn" @click="addInCart()">加入购物车</div>
         </div>
       </div>
@@ -44,19 +44,18 @@ export default {
   name: 'detail',
   data() {
     return {
-      productList: [
-        {
-          productId: this.$route.query.productId, //	商品id
-          selectedNum: '1', //detail.vue	已选数量
-          attributeList: [] //	已选规格json
-        }
-      ],
+      productList: {
+        productId: this.$route.query.productId, //	商品id
+        selectedNum: '1', //detail.vue	已选数量
+        attributeList: [] //	已选规格json
+      },
       attributeList: [],
       thisObject: {
         productId: this.$route.query.productId,
         selectedNum: 1,
         attributeList: []
-      }
+      },
+      price: 0,
     }
   },
   components: { Kv },
@@ -81,13 +80,14 @@ export default {
       try {
         const data = await get(api.queryProductionDetail, params)
         const { attributeList = [] } = data
+        this.price = data.activePrice;
         attributeList.forEach((attribute) => {
           const { mustChoose = Boolean } = attribute
           const { leastChoose = Number } = attribute
           const { optionList = [] } = attribute
           optionList.forEach((option) => {
             option.isSelected = false
-            if (mustChoose && leastChoose > 0) {
+            if (mustChoose || leastChoose > 0) {
               if (optionList.indexOf(option) < leastChoose) {
                 option.isSelected = true
               }
@@ -95,13 +95,13 @@ export default {
           })
         })
         this.setDetailInformation(data)
+        this.thisObject = data;
       } catch (e) {
         console.log('e', e)
       }
     },
     selectProduct(attribute, optionBean) {
       const { isSelected } = optionBean
-
       var count = 0
       var leastChoose = attribute.leastChoose
       console.log('leastChoose', leastChoose + '\t' + isSelected)
@@ -117,14 +117,23 @@ export default {
           alert('最少选择' + leastChoose + '项')
         } else {
           this.$set(optionBean, 'isSelected', false)
+          this.price -= optionBean.optionPrice
         }
       } else {
         this.$set(optionBean, 'isSelected', true)
+        this.price += optionBean.optionPrice
       }
     },
 
     addInCart() {
-      this.$router.push({ path: '/home', query: { thisObject } })
+      this.thisObject.attributeList.forEach(attribute=> {
+        attribute.optionList.forEach(option=> {
+          if(option.isSelected) {
+            this.productList.attributeList.push(option)
+          }
+        })
+      })
+      this.$router.push({ path: '/home', query: { 'productList': JSON.stringify(this.productList) } })
     }
   }
 }
