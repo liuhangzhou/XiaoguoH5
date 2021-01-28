@@ -27,7 +27,7 @@
 
       <div class="settlement">
         <div class="settlement-zd">
-          <div class="settlement-monery">$ {{price}}</div>
+          <div class="settlement-monery">$ {{ amount }}</div>
           <div class="settlement-btn" @click="addInCart()">加入购物车</div>
         </div>
       </div>
@@ -55,7 +55,7 @@ export default {
         selectedNum: 1,
         attributeList: []
       },
-      price: 0,
+      amount: 0.0
     }
   },
   components: { Kv },
@@ -79,8 +79,9 @@ export default {
     async queryProductionDetail(params) {
       try {
         const data = await get(api.queryProductionDetail, params)
+        const { activePrice = Float32Array } = data
+        this.amount = activePrice
         const { attributeList = [] } = data
-        this.price = data.activePrice;
         attributeList.forEach((attribute) => {
           const { mustChoose = Boolean } = attribute
           const { leastChoose = Number } = attribute
@@ -104,25 +105,28 @@ export default {
       const { isSelected } = optionBean
       var count = 0
       var leastChoose = attribute.leastChoose
-      console.log('leastChoose', leastChoose + '\t' + isSelected)
       const { optionList = [] } = attribute
       optionList.forEach((option) => {
         if (option.isSelected) {
           count = count + 1
         }
       })
-      console.log('count', count + '')
       if (isSelected) {
         if (leastChoose > 0 && count == leastChoose) {
           alert('最少选择' + leastChoose + '项')
         } else {
           this.$set(optionBean, 'isSelected', false)
-          this.price -= optionBean.optionPrice
         }
       } else {
         this.$set(optionBean, 'isSelected', true)
-        this.price += optionBean.optionPrice
       }
+      var addition = 0.0
+      optionList.forEach((option) => {
+        if (option.isSelected) {
+          addition = addition + option.optionPrice
+        }
+      })
+      this.amount = this.amount + addition
     },
 
     addInCart() {

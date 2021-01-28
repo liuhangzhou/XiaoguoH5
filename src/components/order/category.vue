@@ -1,12 +1,16 @@
 <template>
   <div class="menu-left">
     <ul v-if="categoryList.length">
-      <li v-for="category in categoryList"
-          :key="category.categoryId"
-          :class="category.categoryId === currentCategoryId && 'current'"
-          @click="toggleCategory(category.categoryId)"
-      >{{ category.categoryName }}
-        <div class="cart_num" v-if=" category.count > 0 ">{{ category.count }}</div>
+      <li
+        v-for="category in categoryList"
+        :key="category.categoryId"
+        :class="category.categoryId === currentCategoryId && 'current'"
+        @click="toggleCategory(category.categoryId)"
+      >
+        {{ category.categoryName }}
+        <div class="cart_num" v-if="category.count > 0">
+          {{ category.count }}
+        </div>
       </li>
     </ul>
   </div>
@@ -19,37 +23,35 @@ export default {
   name: 'category',
   data: () => {
     return {
-       sideMenu:''
-    };
+      sideMenu: ''
+    }
   },
   computed: {
-    ...mapGetters(['categoryList', 'currentCategoryId','categoryNum'])
+    ...mapGetters(['categoryList', 'currentCategoryId', 'categoryNum'])
   },
-  beforeUpdate() {
-   
-  },
+  beforeUpdate() {},
   methods: {
     ...mapActions(['setCurrentCategoryId']),
-    toggleCategory (categoryId){
-      console.log(this.categoryList,"categoryList")
-        this.setCurrentCategoryId(categoryId)
+    toggleCategory(categoryId) {
+      console.log(this.categoryList, 'categoryList')
+      this.setCurrentCategoryId(categoryId)
     }
   }
 }
 </script>
 
 <style scoped>
-   .cart_num{
-     position: absolute;
-     content: "";
-     width:0.35rem;
-     height:0.35rem;
-     border-radius: 50%;
-     background:#E74643;
-     color: #fff;
-     text-align: center;
-     line-height:0.35rem;
-     right: 0;
-     top: 0;
-  }
+.cart_num {
+  position: absolute;
+  content: '';
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: #e74643;
+  color: #fff;
+  text-align: center;
+  line-height: 0.35rem;
+  right: 0.08rem;
+  top: 0.12rem;
+}
 </style>
