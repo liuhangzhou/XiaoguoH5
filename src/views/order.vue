@@ -4,17 +4,23 @@
     <div class="details-box">
       <div class="details-zh">桌号：<span>N01</span></div>
       <ul class="details-item">
-        <li class="flex" v-for="item in cartProduct" :key="item.productId">
+        <li class="flex" v-for="(item,index) in cartProduct" :key="index">
           <div class="flex">
             <div class="details-goods-img">
               <img :src="item.img0" alt="">
             </div>
             <div class="details-text">
               <div class="details-text-p1">{{ item.productName }}</div>
-              <div class="details-text-p2" v-if="item.haveAttribute">
-                <span v-for="(attr,index) in item.attributes" :key="attr.id">{{attr.optionName}} <span v-if="index < item.attributes.length-1">/</span></span> 
+              <div class="details-text-p2" v-if="item.haveAttribute ==0">
+                {{ item.remark }}
               </div>
-              <div class="details-text-p2" v-else>{{ item.remark }}</div>
+              <div class="details-text-p2" v-else>
+                  <span v-for="attr in item.attributes" :key="attr.id">
+                    <span v-for="(attrs,index) in attr.optionList" :key="index">
+                      <span v-if="attrs">{{attrs.optionName}};</span>
+                    </span>  
+                  </span> 
+              </div>
             </div>
           </div>
           <div>
@@ -78,7 +84,7 @@ export default {
     ...mapActions(["setCatProduct", "setCategoryList"]),
     async confirmPayment(params) {
         try {
-          const data = await post(api.queryConfirm, params)
+          const data = await post(api.querySubmit, params)
           console.log(data,"data")
 
         } catch (e) {
@@ -89,7 +95,6 @@ export default {
       this.$router.push('/home')
     },
     confirmOrder() {
-      console.log(this.cartProduct,"cartProduct")
       this.cartProduct.forEach(item => {
          let product = {
               productId:item.productId,
@@ -98,30 +103,48 @@ export default {
          }
          this.list.push(product)
       });
-      // let data = {
-      //     selectedPeopleNum:'1',
-      //     totalAmount:this.totalPrice,
-      //     realAmount:this.realAmount,
-      //     productList:''
-      // }
-       let data = {
+      let cartProductArr = [];
+      this.cartProduct.forEach(product=>{
+        if(product.attributes === undefined) return false;
+        for(let n=0;n<product.attributes.length;n++) {
+          let isNull = []
+          for(let i=0;i<product.attributes[n].optionList.length;i++) {
+            if(product.attributes[n].optionList[i] === null) {
+              isNull.push(i)
+            }
+          }
+          isNull.sort(sortNumber)
+          isNull.forEach(index=>{
+            product.attributes[n].optionList.splice(index,1)
+          })
+        }
+        let list = {
+          productId: product.productId,
+          selectedNum: product.count,
+          attributeList: product.attributes,
+        };
+        cartProductArr.push(list);
+      })
+      let data = {
           msCode: '10001',// 公共参数
           tableNo: '10',
-          token: '',
+//           token: '',
           lang: 'cn',
           selectedPeopleNum:'2',//  就餐人数
           totalAmount:this.totalPrice,//总价
           realAmount:this.realAmount,//总价满减后价格
-          productList:this.cartProduct,//商品json
+          productList:cartProductArr,//商品json
       }
+        this.confirmPayment(data)
 
-      this.confirmPayment(data)
-
-        // this.$router.push('/orderdetail')
+        this.$router.push('/orderdetail')
       // confirmOrder
     },
 
   }
+}
+function sortNumber(a,b){//升序
+    return b - a
 }
 </script>
 

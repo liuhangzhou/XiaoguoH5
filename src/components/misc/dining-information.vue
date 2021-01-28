@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="head-bar flex flex-vc flex-sc">
-      <div class="favourable flex flex-vc" v-if="storeCoupons.size > 0">
+      <div class="favourable flex flex-vc" v-if="storeCoupons.length > 0">
         <img
           class="favourable-icon"
           src="../../assets/img/ic_coupons.png"
@@ -18,7 +18,7 @@
           满{{ coupons.getLeastCost }}减 {{ coupons.getReduceCost }};
         </li>
       </div>
-      <div class="my-order flex flex-vc">
+      <div class="my-order flex flex-vc" @click="goMyOrder">
         <img
           class="order-icon"
           src="../../assets/img/订单.png"
@@ -43,6 +43,9 @@ export default {
   methods: {
     aa() {
       this.$router.push('/login')
+    },
+    goMyOrder() {
+      this.$router.push('/orderdetail')
     }
   }
 }

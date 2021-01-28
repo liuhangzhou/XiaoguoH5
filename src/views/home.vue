@@ -91,13 +91,13 @@ export default {
       }
     },
     addInCart() {
-      console.log(this.cartProduct, this.queryProduct)
+      console.log(this.queryProduct)
       let productArray = this.cartProduct || [];
       this.list.forEach(category=> {
         category.productList.forEach(product=> {
           // 判断是否存在相同属性的商品
           let hasProduct = false;
-          if(product.productId === this.queryProduct.productId) {
+          if(product.productId == this.queryProduct.productId) {
             this.cartProduct.forEach(cart=> {
               if(JSON.stringify(cart.attributes) === JSON.stringify(this.queryProduct.attributeList)) {
                 cart.count += 1;

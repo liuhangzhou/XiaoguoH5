@@ -1,49 +1,37 @@
 <template>
 <!-- 待支付订单 -->
-  <div class="warper">
+<div class="order-wrapper">
+    <div class="warper" v-for="item in orderList" :key="item.tradeId">
     <!-- <div class="details-box "> -->
-      <div class="details-zh flexBetween padding10 navBg"><span >下单时间：<i class="colorRgb">2020-12-12 12：30</i></span><span class="colorRgb">$123.3</span></div>
+      <div class="details-zh flexBetween padding10 navBg">
+        <span >下单时间：<i class="colorRgb">{{item.tradeTime}}</i></span>
+        <span class="colorRgb">${{item.realAmount}}</span>
+      </div>
       <ul class="details-item padding10">
-        <li class="flex">
+        <li class="flex" v-for="(product,index) in item.productList" :key="index">
           <div class="flex">
-            <div class="details-goods-img"></div>
+            <div class="details-goods-img">
+              <img :src="product.img" alt="">
+            </div>
             <div class="details-text">
-              <div class="details-text-p1">碳烤牛肉</div>
-              <div class="details-text-p2">250ML、热</div>
+              <div class="details-text-p1">{{product.productName}}</div>
+              <div class="details-text-p2" v-if="product.attribute.length ===0">
+                {{product.remark}}
+              </div>
+              <div class="details-text-p2" v-else>
+                <span v-for="attr in product.attribute" :key="attr.id">
+                    <span v-for="(attrs,index) in attr.optionList" :key="index">
+                      <span v-if="attrs">{{attrs.optionName}};</span>
+                    </span>  
+                </span> 
+              </div>
             </div>
           </div>
           <div>
-            <div class="details-monery">$ 12.8</div>
-            <div class="details-number">x <span>2</span></div>
+            <div class="details-monery">$ {{product.price}}</div>
+            <div class="details-number">x <span>{{product.count}}</span></div>
           </div>
         </li>
-        <li class="flex">
-          <div class="flex">
-            <div class="details-goods-img"></div>
-            <div class="details-text">
-              <div class="details-text-p1">烤肉A套餐</div>
-              <div class="details-text-p2">牛肉100g+五花肉150g+面包50g</div>
-            </div>
-          </div>
-          <div>
-            <div class="details-monery">$ 12.8</div>
-            <div class="details-number">x <span>2</span></div>
-          </div>
-        </li>
-        <li class="flex">
-          <div class="flex">
-            <div class="details-goods-img"></div>
-            <div class="details-text">
-              <div class="details-text-p1">热咖啡</div>
-              <div class="details-text-p2">250ML、热</div>
-            </div>
-          </div>
-          <div>
-            <div class="details-monery">$ 12.8</div>
-            <div class="details-number">x <span>2</span></div>
-          </div>
-        </li>
-       
       </ul>
       <!-- <div class="details-youhui flex flex-sc flex-vc">
         <div class="details-youhui-text flex flex-vc"><i></i>满减优惠</div>
@@ -54,7 +42,9 @@
         <div class="total-monery">$ 213.40</div>
       </div> -->
     <!-- </div> -->
-    <div class="mask" v-if="showMask">
+    
+  </div>
+  <div class="mask" v-if="showMask">
       <div class="dailog">
         <div class="dailog-tit">下单成功</div>
         <div class="dailog-content">
@@ -62,23 +52,51 @@
         </div>
         <div class="dailog-btn" @click="clearMask">确定</div>
       </div>
-    </div>
-    <div class="xiadan flex flex-vc flex-hc">
+  </div>
+    <div class="xiadan flex flex-vc flex-hc" v-if="showXiaDan">
       <div class="xiadan-btn-left" @click="toHome">继续点餐</div>
       <div class="xiadan-btn-right" @click="payNow">现在支付</div>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
+import api from '@/net/api'
+import { get, post } from '@/net/http'
+
 export default {
   name: 'my-order',
   data: () => {
     return {
-      showMask: false
+      showMask: true,
+      showXiaDan: true,
+      orderList: []
     }
   },
+  created() {
+    if(this.$route.query.source) {
+      this.showXiaDan = false;
+    }
+    this.getMyOrder()
+  },
   methods: {
+    getMyOrder(){
+      let data = {
+          msCode: '10001',// 公共参数
+          tableNo: '10',
+//           token: '',
+          lang: 'cn',
+          status: 'waiting_pay'
+      }
+      get(api.queryOrderList,data).then(res=> {
+        res.list.forEach(element => {
+          element.productList.forEach(attr=>{
+            attr.attribute = attr.attribute ? JSON.parse(attr.attribute) : [];
+          })
+        });
+        this.orderList = res.list;
+      })  
+    },
     clearMask() {
       this.showMask = false
     },
@@ -86,12 +104,33 @@ export default {
       this.$router.push('/home')
     },
     payNow() {
-      this.$router.push('/pay')
-    }
+      let tradeIds = '';
+      this.orderList.forEach(order=> {
+        tradeIds += order.tradeId + ','
+      })
+      tradeIds = tradeIds.slice(0,tradeIds.length-1)
+
+      let params = {
+        msCode: '10001',// 公共参数
+        tableNo: '10',
+  //       token: '',
+        lang: 'cn',
+        tradeIds
+      }
+      get(api.queryConfirm, params).then(res=> {
+        res.count = this.orderList.length;
+        res.tradeIds = params.tradeIds;
+        sessionStorage.setItem('confirmData',JSON.stringify(res))
+        this.$router.push('/pay')
+      })
+
+    },
   }
 }
 </script>
 
 <style scoped>
-
+.order-wrapper{
+  padding-bottom: .8rem;
+}
 </style>

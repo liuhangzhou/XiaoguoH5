@@ -96,7 +96,7 @@ export default {
           })
         })
         this.setDetailInformation(data)
-        this.thisObject = data;
+        this.thisObject = data
       } catch (e) {
         console.log('e', e)
       }
@@ -130,13 +130,28 @@ export default {
     },
 
     addInCart() {
-      this.thisObject.attributeList.forEach(attribute=> {
-        attribute.optionList.forEach(option=> {
-          if(option.isSelected) {
-            this.productList.attributeList.push(option)
+      this.productList = JSON.parse(JSON.stringify(this.thisObject));
+      this.productList.attributeList.forEach(attribute=> {
+        delete attribute.leastChoose
+        delete attribute.mustChoose
+        for(let n=0;n<attribute.optionList.length;n++) {
+          if(!attribute.optionList[n].isSelected) {
+            attribute.optionList[n] = undefined
+          }else{
+            delete attribute.optionList[n].attributeId
+            delete attribute.optionList[n].isSelected
           }
-        })
+        }
       })
+      // this.thisObject.attributeList.forEach(attribute=> {
+      //   attribute.optionList.forEach(option=> {
+      //     if(option.isSelected) {
+      //       this.productList.attributeList.push(option)
+      //     }
+      //   })
+      // })
+      console.log(this.productList.attributeList)
+
       this.$router.push({ path: '/home', query: { 'productList': JSON.stringify(this.productList) } })
     }
   }

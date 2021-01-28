@@ -25,10 +25,16 @@
               </div>
               <div class="goods-text">
                 <p class="goods-name">{{ item.productName }}</p>
-                <p class="goods-remarks" v-if="item.haveAttribute">
-                  <span v-for="(attr,index) in item.attributes" :key="attr.id">{{attr.optionName}} <span v-if="index < item.attributes.length-1">/</span></span> 
+                <p class="goods-remarks" v-if="item.haveAttribute == 0">
+                  {{ item.remark }}
                 </p>
-                <p class="goods-remarks"  v-else>{{ item.remark }}</p>
+                <p class="goods-remarks"  v-else>
+                  <span v-for="attr in item.attributes" :key="attr.id">
+                    <span v-for="(attrs,index) in attr.optionList" :key="index">
+                      <span v-if="attrs">{{attrs.optionName}};</span>
+                    </span>  
+                  </span> 
+                </p>
               </div>
               <div class="select-monery">{{ item.price }}</div>
               <div class="add-remove flex flex-sc flex-vc">
