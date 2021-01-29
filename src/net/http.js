@@ -14,8 +14,17 @@ const service = axios.create({
 })
 
 // request interceptor
-service.intercept ors.request.use(
+service.interceptors.request.use(
   config => {
+    var lang = navigator.language === 'en' ? 'us' : 'cn'
+    let token = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')).token:'';
+    if(config.data) {
+      config.data.lang = lang
+      config.data.token = token
+    }else {
+      config.params.lang = lang
+      config.params.token = token
+    }
     config.data = qs.stringify(config.data)
     config.headers['Access-Control-Allow-Credentials'] = true
     return config
@@ -31,6 +40,8 @@ service.interceptors.response.use(response => {
   const { data: { code, desc, data } } = response
   if (code === '0') {
     return Promise.resolve(data)
+  }else if(code == '40006') {
+    sessionStorage.setItem('user','');
   }
   return Promise.reject({ desc, code })
 }, error => Promise.reject(error))

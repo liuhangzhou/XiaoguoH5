@@ -8,10 +8,10 @@
             Cart(<span>{{ cartProduct? cartProduct.length : '' }}</span
             >)
           </div>
-          <div class="remove-select" @click="clearCart">清空</div>
+          <div class="remove-select" @click="clearCart">{{$t("home.qinkong")}}</div>
         </div>
         <div class="settlement-client">
-          <div class="settlement-client-name flex flex-vc"><i></i>小叮当</div>
+          <div class="settlement-client-name flex flex-vc"><i></i>{{username}}</div>
         </div>
         <div class="select-content">
           <ul>
@@ -57,7 +57,7 @@
           </div>
         </div>
         <div class="settlement-monery">{{ this.totalPrice }}</div>
-        <div class="settlement-btn" @click="toOrder">去下单</div>
+        <div class="settlement-btn" @click="toOrder">{{$t("home.quxiadan")}}</div>
       </div>
     </div>
   </div>
@@ -72,7 +72,8 @@ export default {
       showCart: false,
       cartTotal: '',
       totalPrice: '',
-      discount: 0
+      discount: 0,
+      username: null,
     }
   },
   computed: {
@@ -83,6 +84,7 @@ export default {
     this.updatedCart()
   },
   mounted() {
+    this.username = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')).name : '未登录'
     this.updatedCart()
   },
   methods: {
@@ -114,7 +116,8 @@ export default {
       }
       if (this.totalPrice >= 50) {
         this.discount =
-          '已减5元,再买' + Number(100 - this.totalPrice) + '可减10元'
+          this.$t('yijian') + Number(100 - this.totalPrice) + this.$t('kejian')
+          // '已减5元,再买' + Number(100 - this.totalPrice) + '可减10元'
       }
       this.cartTotal = num
     },

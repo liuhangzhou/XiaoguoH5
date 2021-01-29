@@ -2,7 +2,7 @@
 <!-- 订单详情 -->
   <div class="warper">
     <div class="details-box">
-      <div class="details-zh">桌号：<span>N01</span></div>
+      <div class="details-zh">{{$t('home.zhuohao')}}：<span>N01</span></div>
       <ul class="details-item">
         <li class="flex" v-for="(item,index) in cartProduct" :key="index">
           <div class="flex">
@@ -31,18 +31,18 @@
         
       </ul>
       <div class="details-youhui flex flex-sc flex-vc">
-        <div class="details-youhui-text flex flex-vc"><i></i>满减优惠</div>
+        <div class="details-youhui-text flex flex-vc"><i></i>{{$t('home.mjyh')}}</div>
         <div class="details-youhui-monery" v-if="this.totalPrice >=50 ">-5.00</div>
         <div class="details-youhui-monery" v-else-if="this.totalPrice >= 100 ">-10.00</div>
       </div>
       <div class="total flex flex-sc flex-vc">
-        <div class="total-text">合计</div>
+        <div class="total-text">{{$t('home.heji')}}</div>
         <div class="total-monery">{{ this.realAmount  }}</div>
       </div>
     </div>
     <div class="xiadan-footer flex flex-vc flex-hc">
-      <div class="wait-btn" @click="toHome">我再想想1</div>
-      <div class="order-btn" @click="confirmOrder">确认下单</div>
+      <div class="wait-btn" @click="toHome">{{$t('home.wzxx')}}</div>
+      <div class="order-btn" @click="confirmOrder">{{$t('home.qrxd')}}</div>
     </div>
   </div>
 </template>

@@ -9,16 +9,16 @@
         <p class="flex flex-vc flex-sc"><span>下单时间</span><span>2021-01-14 15:49:24</span></p>
         <p class="flex flex-vc flex-sc"><span>订单号</span><span>7542605045661696</span></p>
         <p class="flex flex-vc flex-sc"><span>状态</span><span>已支付</span></p> -->
-        <p class="flex flex-vc flex-sc"><span>支付金额</span><span>{{statusData.realAmount}}元</span></p>
-        <p class="flex flex-vc flex-sc"><span>总金额</span><span>{{statusData.orderAmount}}元</span></p>
-        <p class="flex flex-vc flex-sc"><span>下单时间</span><span>{{statusData.tradeTime}}</span></p>
-        <p class="flex flex-vc flex-sc"><span>订单号</span><span>{{statusData.orderNo}}</span></p>
-        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'success'"><span>状态</span><span>付款成功</span></p>
-        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'fail'"><span>状态</span><span>付款失败</span></p>
-        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'processing'"><span>状态</span><span>进行中</span></p>
+        <p class="flex flex-vc flex-sc"><span>{{$t('home.zfje')}}</span><span>{{statusData.realAmount}}{{$t('home.yuan')}}</span></p>
+        <p class="flex flex-vc flex-sc"><span>{{$t('home.zje')}}</span><span>{{statusData.orderAmount}}{{$t('home.yuan')}}</span></p>
+        <p class="flex flex-vc flex-sc"><span>{{$t('home.xdsj')}}</span><span>{{statusData.tradeTime}}</span></p>
+        <p class="flex flex-vc flex-sc"><span>{{$t('home.ddh')}}</span><span>{{statusData.orderNo}}</span></p>
+        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'success'"><span>{{$t('home.zhuangtai')}}</span><span>{{$t('home.fkcg')}}</span></p>
+        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'fail'"><span>{{$t('home.zhuangtai')}}</span><span>{{$t('home.fksb')}}</span></p>
+        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'processing'"><span>{{$t('home.zhuangtai')}}</span><span>{{$t('home.jxz')}}</span></p>
       </div>
     </div>
-    <div class="payBtn textCenter" @click="goHome">继续点单</div>
+    <div class="payBtn textCenter" @click="goHome">{{$t('home.jxdc')}}</div>
   </div>
 </template>
 

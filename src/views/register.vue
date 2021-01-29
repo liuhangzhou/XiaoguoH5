@@ -2,32 +2,32 @@
   <div class="warper warper2">
     <div class="details-box2">
       <div class="details-zh between" >
-        <span style="margin:0 auto" >注册/登录</span>
+        <span style="margin:0 auto" >{{$t('home.zhuce')}}/{{$t('home.denglu')}}</span>
         </div>
     </div>
     <div class="cont cont2">
-      <p><span>姓名/称呼</span><input type="text" v-model="registerData.name" placeholder="单行输入 "></p>
-      <p><span>性别</span>
+      <p><span>{{$t('home.xingming')}}/{{$t('home.chenghu')}}</span><input type="text" v-model="registerData.name" :placeholder="$t('home.dhsr')"></p>
+      <p><span>{{$t('home.xingbie')}}</span>
       <span class="toborder" style="width:1.7rem;text-align:center;color: #1890FF;border: 1px solid  rgb(0, 118, 255);" :class="activeIndex == index ? 'active' : ''" 
         v-for="(item,index) in sexList" 
         :key="index" 
         @click="handleTap(index)">
         {{item.name}}
         </span></p>
-      <p><span>手机号</span><input type="text"  v-model="registerData.tel" placeholder="单行输入 "></p>
-      <p><span>验证码</span>
+      <p><span>{{$t('home.shoujihao')}}</span><input type="text"  v-model="registerData.tel" :placeholder="$t('home.dhsr') "></p>
+      <p><span>{{$t('home.yanzhengma')}}</span>
       <span style="width:35%;"><input type="text"  v-model="registerData.validateCode" style="width:75%;"></span>
       <span class="colorWhite"  @click="identifyclick" style="width:1.7rem;background-color:rgb(24, 144, 255);">{{ iptValue }}</span>
       </p>
-      <p><span>电子邮箱</span><input type="text"  v-model="registerData.email" placeholder="单行输入 "></p>
-      <p><span>密码</span><input type="text" v-model="registerData.password"  placeholder="单行输入 "></p>
-      <p><span>确认密码</span><input type="text" v-model="registerData.rePassword"  placeholder="单行输入 "></p>
+      <p><span>{{$t('home.youxiang')}}</span><input type="text"  v-model="registerData.email" :placeholder="$t('home.dhsr') "></p>
+      <p><span>{{$t('home.mima')}}</span><input type="text" v-model="registerData.password"  :placeholder="$t('home.dhsr') "></p>
+      <p><span>{{$t('home.qrmm')}}</span><input type="text" v-model="registerData.rePassword"  :placeholder="$t('home.dhsr') "></p>
     </div>
     <p class=" center center2"  >
-    <span class="radius10 color000 bcgWhite" style="background:#fff;border:1px solid #5b6b73;"> 取消</span><span class="radius10" @click="submit" style="background-color: rgb(242, 133, 18);"> 提交</span></p>
+    <span class="radius10 color000 bcgWhite" style="background:#fff;border:1px solid #5b6b73;"> {{$t('home.quxiao')}}</span><span class="radius10" @click="submit" style="background-color: rgb(242, 133, 18);"> {{$t('home.tijiao')}}</span></p>
     <div class="goloign center">
-      <span style="color:#000;">如果已是会员？</span>
-      <span class="radius10" @click="gologin">去登录</span>
+      <span style="color:#000;">{{$t('home.yshy')}}？</span>
+      <span class="radius10" @click="gologin">{{$t('home.qudenglu')}}</span>
     </div>
   
   </div>
@@ -39,11 +39,11 @@ import { post } from '@/net/http'
 import api from '@/net/api'
 export default {
   name: 'order',
-  data: () => {
+  data(){
     return {
       sexList: [
-        {code:'1',name:'男'},
-        {code:'2',name:'女'},
+        {code:'1',name:this.$t('home.nan')},
+        {code:'2',name:this.$t('home.nv')},
         ],
       registerData:{
         name:'',
@@ -56,7 +56,7 @@ export default {
           
         },
       activeIndex : 0,
-      iptValue: "获取验证码",
+      iptValue: this.$t('home.hqyzm'),
       verifyCode: "", //验证码
       num: 60,
     }
@@ -103,12 +103,12 @@ export default {
 
           this.querySendValidateCode(data)
           this.num--;
-          this.iptValue = `重新发送(${this.num})`;
+          this.iptValue = `${this.$t('home.cxfs')}(${this.num})`;
           let timeID = setInterval(_ => {
             this.num--;
-            this.iptValue = `重新发送(${this.num})`;
+            this.iptValue = `${this.$t('home.cxfs')}(${this.num})`;
             if (this.num === 0) {
-              this.iptValue = "获取验证码";
+              this.iptValue = this.$t('home.hqyzm');
               this.num = 60;
               clearInterval(timeID);
             }
@@ -117,11 +117,12 @@ export default {
     submit(){
       Object.keys(this.registerData).forEach((key)=>{
         if(this.registerData[key]==''){
-          alert('填写完整信息')
+          alert(this.$t('home.txwzxx'))
           return;
         }
-    })
-    this.queryRegister(this.registerData)
+      })
+      console.log(this.registerData)
+      this.queryRegister(this.registerData)
       
 
     }

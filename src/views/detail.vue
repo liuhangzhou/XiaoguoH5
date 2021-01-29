@@ -28,7 +28,7 @@
       <div class="settlement">
         <div class="settlement-zd">
           <div class="settlement-monery">$ {{ amount }}</div>
-          <div class="settlement-btn" @click="addInCart()">加入购物车</div>
+          <div class="settlement-btn" @click="addInCart()">{{$t("home.jiarugouwuche")}}</div>
         </div>
       </div>
     </div>

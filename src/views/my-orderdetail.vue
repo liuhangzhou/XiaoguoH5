@@ -4,7 +4,7 @@
     <div class="warper" v-for="item in orderList" :key="item.tradeId">
     <!-- <div class="details-box "> -->
       <div class="details-zh flexBetween padding10 navBg">
-        <span >下单时间：<i class="colorRgb">{{item.tradeTime}}</i></span>
+        <span >{{$t('home.xdsj')}}：<i class="colorRgb">{{item.tradeTime}}</i></span>
         <span class="colorRgb">${{item.realAmount}}</span>
       </div>
       <ul class="details-item padding10">
@@ -46,16 +46,16 @@
   </div>
   <div class="mask" v-if="showMask">
       <div class="dailog">
-        <div class="dailog-tit">下单成功</div>
+        <div class="dailog-tit">{{$t('home.xdcg')}}</div>
         <div class="dailog-content">
-          <div class="dailog-p1">美食正在做准备中，请耐心等待<br><span>如需加菜，继续点餐</span></div>
+          <div class="dailog-p1">{{$t('home.qdd')}}<br><span>{{$t('home.jiacai')}}</span></div>
         </div>
-        <div class="dailog-btn" @click="clearMask">确定</div>
+        <div class="dailog-btn" @click="clearMask">{{$t('home.queding')}}</div>
       </div>
   </div>
     <div class="xiadan flex flex-vc flex-hc" v-if="showXiaDan">
-      <div class="xiadan-btn-left" @click="toHome">继续点餐</div>
-      <div class="xiadan-btn-right" @click="payNow">现在支付</div>
+      <div class="xiadan-btn-left" @click="toHome">{{$t('home.jxdc')}}</div>
+      <div class="xiadan-btn-right" @click="payNow">{{$t('home.xzzf')}}</div>
     </div>
 </div>
 </template>

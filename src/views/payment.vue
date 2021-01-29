@@ -11,7 +11,7 @@
       </div> -->
       <div class="payment-box">
   
-        <div class="payment-mode flex flex-hc flex-vc">支付方式</div>
+        <div class="payment-mode flex flex-hc flex-vc">{{$t('home.zffs')}}</div>
         <div class="payment-item flex flex-vc flex-sc">
           <p><img class="pay-icon" src="../assets/img/bank.png" alt="">Credit/Debit Card</p>
           <div></div>
@@ -22,7 +22,7 @@
           <label for="put"></label>
         </div> -->
       </div>
-      <div class="payBtn textCenter" @click="goPay">确认支付</div>
+      <div class="payBtn textCenter" @click="goPay">{{$t('home.qrzf')}}</div>
     </div>
   </div>
 </template>

@@ -3,44 +3,44 @@
     <div class="payment-main">
       <div class="payment-number">
         <div class="payment-number-head flex flex-sc flex-vc">
-          <p>共计：{{confirmData.count}} 项</p>
-          <div @click="goOrderDetail">订单详情</div>
+          <p>{{$t('home.gongji')}}：{{confirmData.count}} {{$t('home.xiang')}}</p>
+          <div @click="goOrderDetail">{{$t('home.ddxq')}}</div>
         </div>
         <div class="payment-number-content">
           <ul>
             <li class="flex flex-vc flex-sc">
-              <p>小计</p>
+              <p>{{$t('home.xiaoji')}}</p>
               <p>$ {{confirmData.totalAmount}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
-              <p>消费税</p>
+              <p>{{$t('home.xfs')}}</p>
               <p>$ {{confirmData.exciseAmount}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
-              <p>小费</p>
+              <p>{{$t('home.xiaofe')}}</p>
               <p>$ {{confirmData.tipAmount}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
-              <p>满减优惠</p>
+              <p>{{$t('home.mjyh')}}</p>
               <p><span>$ {{confirmData.redbagReduceAmount}}</span></p>
             </li>
           </ul>
         </div>
         <div class="payment-zomgshu flex flex-vc flex-sc">
-          <p>合计：</p>
+          <p>{{$t('home.heji')}}：</p>
           <p>$ {{confirmData.realAmount}}</p>
         </div>
       </div>
       <div class="youhuiquan flex flex-vc flex-sc">
-        <p>优惠券</p>
-        <p class="youhuiquan-p2">暂无可用</p>
+        <p>{{$t('home.yhq')}}</p>
+        <p class="youhuiquan-p2">{{$t('home.zwky')}}</p>
       </div>
       <div class="payment-box">
         <div class="payment-monery flex flex-vc flex-sc">
-          <p>实付金额</p>
+          <p>{{$t('home.sfje')}}</p>
           <p><span>$ {{confirmData.realAmount}}</span></p>
         </div>
-        <div class="payment-mode flex flex-hc flex-vc">支付方式</div>
+        <div class="payment-mode flex flex-hc flex-vc">{{$t('home.zffs')}}</div>
         <div class="payment-item flex flex-vc flex-sc">
           <p><img class="pay-icon" src="../assets/img/bank.png" alt="">Credit/Debit Card</p>
           <div></div>
@@ -54,7 +54,7 @@
       <div class="settlement">
         <div class="settlement-zd">
           <div class="settlement-monery">$ {{confirmData.realAmount}}</div>
-          <div class="settlement-btn" @click="goPay">确认支付</div>
+          <div class="settlement-btn" @click="goPay">{{$t('home.qrzf')}}</div>
         </div>
       </div>
     </div>
