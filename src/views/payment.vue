@@ -30,6 +30,7 @@
 <script>
 import { post } from "@/net/http"
 import api from "@/net/api"
+import { setTimeout } from 'timers';
 export default {
   name: 'pay',
   data: () => {
@@ -45,6 +46,8 @@ export default {
      async queryPay(params) {
       try {
         const data = await post(api.queryPay, params)
+        window.location.href = data.payinfo;
+        this.$router.push('/orderStatus?orderNo='+data.orderNo)
         // const { attributeList = [] } = data
         // attributeList.forEach(attribute => {
         //   const { optionList = [] } = attribute
@@ -69,7 +72,6 @@ export default {
 
       }
       this.queryPay(params)
-      this.$router.push('/orderStatus')
     }
   }
 }

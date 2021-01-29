@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 
 // const BASE_URL = 'http://47.116.128.207:8081/wechat'
 const BASE_URL = '/wechat'
@@ -8,14 +9,14 @@ const service = axios.create({
   baseURL: BASE_URL, // url = base url + request url
   timeout: 5000,
   headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/x-www-form-urlencoded'
   }
 })
 
 // request interceptor
-service.interceptors.request.use(
+service.intercept ors.request.use(
   config => {
+    config.data = qs.stringify(config.data)
     config.headers['Access-Control-Allow-Credentials'] = true
     return config
   },

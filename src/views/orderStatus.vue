@@ -2,7 +2,7 @@
   <div class="warper">
     <div class="orderstatus">
       <div class="payment-number">
-        <p class="textCenter" style="font-size:.28rem;">韩国烤肉（中山公园店）</p>
+        <!-- <p class="textCenter" style="font-size:.28rem;">韩国烤肉（中山公园店）</p> -->
       </div>
       <div class="conts">
         <!-- <p class="flex flex-vc flex-sc"><span>支付金额</span><span>129.11元</span></p>
@@ -13,11 +13,12 @@
         <p class="flex flex-vc flex-sc"><span>总金额</span><span>{{statusData.orderAmount}}元</span></p>
         <p class="flex flex-vc flex-sc"><span>下单时间</span><span>{{statusData.tradeTime}}</span></p>
         <p class="flex flex-vc flex-sc"><span>订单号</span><span>{{statusData.orderNo}}</span></p>
-        <p class="flex flex-vc flex-sc" v-if="statusData.success"><span>状态</span><span>付款成功</span></p>
-        <p class="flex flex-vc flex-sc" v-if="statusData.fail"><span>状态</span><span>付款失败</span></p>
-        <p class="flex flex-vc flex-sc" v-if="statusData.processing"><span>状态</span><span>进行中</span></p>
+        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'success'"><span>状态</span><span>付款成功</span></p>
+        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'fail'"><span>状态</span><span>付款失败</span></p>
+        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'processing'"><span>状态</span><span>进行中</span></p>
       </div>
     </div>
+    <div class="payBtn textCenter" @click="goHome">继续点单</div>
   </div>
 </template>
 
@@ -33,21 +34,24 @@ export default {
     }
   },
    mounted() {
-    const { productId } = this.$route.query
+    const { orderNo } = this.$route.query
     const params = { // TODO
-      orderNo: '123456'
+      orderNo
     }
     this.queryStatus(params)
   },
   methods: {
-    async queryStatus(data) {
+    async queryStatus(params) {
       try {
-        const data = await get(api.queryStatus, data)
-        console.log(data)
+        const data = await get(`${api.queryStatus}`, params)
+        this.statusData = data
       } catch (e) {
         console.log('e', e)
       }
     },
+    goHome() {
+      this.$router.push('/home')
+    }
   }
  
 }

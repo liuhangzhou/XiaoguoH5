@@ -28,16 +28,26 @@ export default {
   }, 
   data(){
     return {
-      queryProduct: {}
+      queryProduct: {},
+      isAdd: false
     }
   },
-  created() {
-    if(Object.keys(this.$route.query).length) {
+  beforeRouteEnter (to, from, next) {
+    if(from.path === '/detail') {
+      next(vm => {
+        // 通过 `vm` 访问组件实例
+        vm.isAdd = true
+      })
+    }else {
+      next()
+    }
+    
+  },
+  mounted() {
+    if(Object.keys(this.$route.query).length && this.isAdd) {
       this.queryProduct = JSON.parse(this.$route.query.productList);
       this.addInCart()
     }
-  },
-  mounted() {
     const params = {
       // TODO
       msCode: '10001',
@@ -91,7 +101,6 @@ export default {
       }
     },
     addInCart() {
-      console.log(this.queryProduct)
       let productArray = this.cartProduct || [];
       this.list.forEach(category=> {
         category.productList.forEach(product=> {

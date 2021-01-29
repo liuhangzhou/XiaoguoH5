@@ -95,7 +95,7 @@ export default {
       this.$router.push('/home')
     },
     confirmOrder() {
-      this.cartProduct.forEach(item => {
+       this.cartProduct.forEach(item => {
          let product = {
               productId:item.productId,
               selectedNum:item.count,
@@ -105,18 +105,19 @@ export default {
       });
       let cartProductArr = [];
       this.cartProduct.forEach(product=>{
-        if(product.attributes === undefined) return false;
-        for(let n=0;n<product.attributes.length;n++) {
-          let isNull = []
-          for(let i=0;i<product.attributes[n].optionList.length;i++) {
-            if(product.attributes[n].optionList[i] === null) {
-              isNull.push(i)
+        if(product.attributes !== undefined){
+          for(let n=0;n<product.attributes.length;n++) {
+            let isNull = []
+            for(let i=0;i<product.attributes[n].optionList.length;i++) {
+              if(product.attributes[n].optionList[i] === null) {
+                isNull.push(i)
+              }
             }
+            isNull.sort(sortNumber)
+            isNull.forEach(index=>{
+              product.attributes[n].optionList.splice(index,1)
+            })
           }
-          isNull.sort(sortNumber)
-          isNull.forEach(index=>{
-            product.attributes[n].optionList.splice(index,1)
-          })
         }
         let list = {
           productId: product.productId,
@@ -125,19 +126,18 @@ export default {
         };
         cartProductArr.push(list);
       })
-      let data = {
-          msCode: '10001',// 公共参数
-          tableNo: '10',
-//           token: '',
-          lang: 'cn',
-          selectedPeopleNum:'2',//  就餐人数
-          totalAmount:this.totalPrice,//总价
-          realAmount:this.realAmount,//总价满减后价格
-          productList:cartProductArr,//商品json
-      }
-        this.confirmPayment(data)
-
-        this.$router.push('/orderdetail')
+      let data = {
+          msCode: '10001',// 公共参数
+          tableNo: '10',
+//           token: '',
+          lang: 'cn',
+          selectedPeopleNum:'2',//  就餐人数
+          totalAmount:this.totalPrice,//总价
+          realAmount:this.realAmount,//总价满减后价格
+          productList:JSON.stringify(cartProductArr),//商品json
+      }
+      this.confirmPayment(data)
+      this.$router.push('/orderdetail')
       // confirmOrder
     },
 
