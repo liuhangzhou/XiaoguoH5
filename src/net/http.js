@@ -1,9 +1,8 @@
 import axios from 'axios'
 import qs from 'qs'
 
-// const BASE_URL = 'http://47.116.128.207:8081/wechat'
-const BASE_URL = '/wechat'
-console.log(BASE_URL)
+const BASE_URL = 'http://47.116.128.207:8081/wechat'
+// const BASE_URL = '/wechat'
 // create an axios instance
 const service = axios.create({
   baseURL: BASE_URL, // url = base url + request url

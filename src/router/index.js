@@ -10,11 +10,17 @@ import Register from '../views/register'
 import Payment from '../views/payment'
 import MyOrderdetail from '../views/my-orderdetail'
 import OrderStatus from '../views/orderStatus'
+import SelectNum from '../views/selectNum'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    name: 'selectnum',
+    component: SelectNum
+  },
+  {
+    path: '/home',
     name: 'home',
     component: Home
   },

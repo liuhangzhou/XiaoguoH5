@@ -8,7 +8,7 @@
     <div class="cont cont2">
       <p><span>{{$t('home.xingming')}}/{{$t('home.chenghu')}}</span><input type="text" v-model="registerData.name" :placeholder="$t('home.dhsr')"></p>
       <p><span>{{$t('home.xingbie')}}</span>
-      <span class="toborder" style="width:1.7rem;text-align:center;color: #1890FF;border: 1px solid  rgb(0, 118, 255);" :class="activeIndex == index ? 'active' : ''" 
+      <span class="toborder" style="width:1.58rem;text-align:center;color: #1890FF;border: 1px solid  rgb(0, 118, 255);" :class="activeIndex == index ? 'active' : ''" 
         v-for="(item,index) in sexList" 
         :key="index" 
         @click="handleTap(index)">
@@ -16,19 +16,20 @@
         </span></p>
       <p><span>{{$t('home.shoujihao')}}</span><input type="text"  v-model="registerData.tel" :placeholder="$t('home.dhsr') "></p>
       <p><span>{{$t('home.yanzhengma')}}</span>
-      <span style="width:35%;"><input type="text"  v-model="registerData.validateCode" style="width:75%;"></span>
-      <span class="colorWhite"  @click="identifyclick" style="width:1.7rem;background-color:rgb(24, 144, 255);">{{ iptValue }}</span>
+      <input type="text"  v-model="registerData.validateCode" style="width:30%;margin-right:.2rem">
+      <span class="colorWhite"  @click="identifyclick" style="color:#666;font-size:.24rem;">{{ iptValue }}</span>
       </p>
       <p><span>{{$t('home.youxiang')}}</span><input type="text"  v-model="registerData.email" :placeholder="$t('home.dhsr') "></p>
-      <p><span>{{$t('home.mima')}}</span><input type="text" v-model="registerData.password"  :placeholder="$t('home.dhsr') "></p>
-      <p><span>{{$t('home.qrmm')}}</span><input type="text" v-model="registerData.rePassword"  :placeholder="$t('home.dhsr') "></p>
+      <p><span>{{$t('home.mima')}}</span><input type="password" v-model="registerData.password"  :placeholder="$t('home.dhsr') "></p>
+      <p><span>{{$t('home.qrmm')}}</span><input type="password" v-model="registerData.rePassword"  :placeholder="$t('home.dhsr') "></p>
     </div>
     <p class=" center center2"  >
-    <span class="radius10 color000 bcgWhite" style="background:#fff;border:1px solid #5b6b73;"> {{$t('home.quxiao')}}</span><span class="radius10" @click="submit" style="background-color: rgb(242, 133, 18);"> {{$t('home.tijiao')}}</span></p>
+    <span class="radius10 color000 bcgWhite" style="background:#fff;border:1px solid #5b6b73;" @click="goHome"> {{$t('home.quxiao')}}</span><span class="radius10" @click="submit" style="background-color: rgb(242, 133, 18);"> {{$t('home.tijiao')}}</span></p>
     <div class="goloign center">
       <span style="color:#000;">{{$t('home.yshy')}}？</span>
       <span class="radius10" @click="gologin">{{$t('home.qudenglu')}}</span>
     </div>
+    <alert :show.sync="alertShow" :text="alertText" />
   
   </div>
 </template>
@@ -37,6 +38,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import { post } from '@/net/http'
 import api from '@/net/api'
+
 export default {
   name: 'order',
   data(){
@@ -59,6 +61,8 @@ export default {
       iptValue: this.$t('home.hqyzm'),
       verifyCode: "", //验证码
       num: 60,
+      alertShow: false,
+      alertText: '',
     }
   },
   mounted() {
@@ -78,10 +82,15 @@ export default {
         const data = await post(api.queryRegister, params)
       } catch (e) {
         console.log('e', e)
+        this.alertShow = true;
+        this.alertText = e.desc;
       }
     },
     gologin() {
       this.$router.push('/login')
+    },
+    goHome() {
+      this.$router.push('/home')
     },
     handleTap(index) {
         this.activeIndex = index;  // 把当前点击元素的index，赋值给activeIndex
@@ -115,13 +124,18 @@ export default {
           }, 1000);
     },
     submit(){
-      Object.keys(this.registerData).forEach((key)=>{
+      try{
+        Object.keys(this.registerData).forEach((key)=>{
         if(this.registerData[key]==''){
-          alert(this.$t('home.txwzxx'))
-          return;
+          this.alertShow = true;
+          this.alertText = $t('home.txwzxx');
+          throw new Error('未填写完整')
         }
       })
-      console.log(this.registerData)
+      } catch(e) {
+        console.log(e)
+      }
+      
       this.queryRegister(this.registerData)
       
 

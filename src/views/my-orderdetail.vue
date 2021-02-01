@@ -44,7 +44,7 @@
     <!-- </div> -->
     
   </div>
-  <div class="mask" v-if="showMask">
+  <div class="mask" v-if="showMask && showXiaDan">
       <div class="dailog">
         <div class="dailog-tit">{{$t('home.xdcg')}}</div>
         <div class="dailog-content">
@@ -73,9 +73,12 @@ export default {
       orderList: []
     }
   },
-  created() {
-    if(this.$route.query.source) {
+  mounted() {
+    if(this.$route.query.source== 'pay') {
       this.showXiaDan = false;
+    }else if(this.$route.query.source== 'myorder') {
+      this.showXiaDan = true;
+      this.showMask = false;
     }
     this.getMyOrder()
   },
@@ -101,7 +104,7 @@ export default {
       this.showMask = false
     },
     toHome() {
-      this.$router.push('/home')
+      this.$router.push('/home?refresh=true')
     },
     payNow() {
       let tradeIds = '';
@@ -132,5 +135,9 @@ export default {
 <style scoped>
 .order-wrapper{
   padding-bottom: .8rem;
+}
+.details-item li{
+  display: flex;
+  justify-content: space-between;
 }
 </style>

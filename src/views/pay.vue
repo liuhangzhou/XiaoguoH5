@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { get } from "@/net/http"
+import { post } from "@/net/http"
 import api from "@/net/api"
 export default {
   name: 'pay',
@@ -76,22 +76,35 @@ export default {
   },
   mounted() {
     // const params = [] //tradeIds订单号，多个以英文逗号隔开
-    // this.queryConfirm(params)
   },
   methods: {
-    async queryConfirm(params) {
+    async queryPay(params) {
       try {
-        const data = await get(api.queryConfirm, params)
+        const data = await post(api.queryPay, params)
+        window.location.href = data.payinfo;
+        this.$router.push('/orderStatus?orderNo='+data.orderNo)
       } catch (e) {
         console.log('e', e)
       }
     },
      
     goPay () {
-      this.$router.push('/payment')
+      let params = {
+        msCode: '10001',
+        tableNo: '10',
+        lang: 'cn',
+        tradeIds:this.confirmData.tradeIds	,//订单号，多个以英文逗号隔开
+        couponId:'',//	否 使用的优惠券id
+        realAmount:this.confirmData.realAmount,//是 	用券后的实付金额
+        payType:'bank',//是 bank网银支付；wechat微信支付（暂不支持）
+        returnUrl	:'http://xxx.com/xxx',// 否	同步回调地址
+        cancelUrl:'http://xxx.com/xxx',//否 取消地址
+
+      }
+      this.queryPay(params)
     },
     goOrderDetail () {
-      this.$router.push('/orderdetail?source=pay',)
+      this.$router.push('/orderdetail?source=pay')
     }
   }
 }

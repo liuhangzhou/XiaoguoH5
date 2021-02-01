@@ -18,7 +18,8 @@ export default new Vuex.Store({
       attributeList: [],
       imgList: []
     }, // 详情页信息
-    cartProduct: []
+    cartProduct: [],
+    mealsNumber: 1,
   },
   mutations: {
     SET_STORE_INFO: (state, payload) =>
@@ -30,7 +31,9 @@ export default new Vuex.Store({
       (state.currentCategoryId = payload),
     SET_DETAIL_INFORMATION: (state, payload) =>
       (state.detailInformation = payload),
-    SET_STORE_CART_PRODUCT: (state, payload) => (state.cartProduct = payload)
+    SET_STORE_CART_PRODUCT: (state, payload) => (state.cartProduct = payload),
+    SET_MEALSNUMBER: (state, payload) => (state.mealsNumber = payload),
+    
   },
   actions: {
     setStoreInfo: ({ commit }, payload) => commit('SET_STORE_INFO', payload),
@@ -43,7 +46,8 @@ export default new Vuex.Store({
     setDetailInformation: ({ commit }, payload) =>
       commit('SET_DETAIL_INFORMATION', payload),
     setCatProduct: ({ commit }, payload) =>
-      commit('SET_STORE_CART_PRODUCT', payload)
+      commit('SET_STORE_CART_PRODUCT', payload),
+    setMealsNumber: ({ commit }, payload) => commit('SET_MEALSNUMBER', payload),
   },
   getters: {
     storeInfo: (state) => state.storeInfo,
@@ -55,6 +59,7 @@ export default new Vuex.Store({
         ? state.categoryList[0].categoryId
         : state.currentCategoryId,
     detailInformation: (state) => state.detailInformation,
-    cartProduct: (state) => state.cartProduct
+    cartProduct: (state) => state.cartProduct,
+    mealsNumber: (state)=> state.mealsNumber,
   }
 })

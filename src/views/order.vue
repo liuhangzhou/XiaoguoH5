@@ -15,23 +15,29 @@
                 {{ item.remark }}
               </div>
               <div class="details-text-p2" v-else>
-                  <span v-for="attr in item.attributes" :key="attr.id">
-                    <span v-for="(attrs,index) in attr.optionList" :key="index">
-                      <span v-if="attrs">{{attrs.optionName}};</span>
-                    </span>  
-                  </span> 
+                <span v-for="attr in item.attributes" :key="attr.id">
+                  <span v-for="(attrs,index) in attr.optionList" :key="index">
+                    <span v-if="attrs">{{attrs.optionName}};</span>
+                  </span>
+                </span>
               </div>
             </div>
           </div>
           <div>
-            <div class="details-monery">{{ item.price }}</div>
+            <div class="details-monery">{{ item.activePrice }}</div>
             <div class="details-number">x <span>{{ item.count }}</span></div>
           </div>
         </li>
         
       </ul>
       <div class="details-youhui flex flex-sc flex-vc">
-        <div class="details-youhui-text flex flex-vc"><i></i>{{$t('home.mjyh')}}</div>
+        <div class="details-youhui-text flex flex-vc">
+          <img
+          class="favourable-icon"
+          src="../assets/img/ic_coupons.png"
+          alt=""
+        />
+        {{$t('home.mjyh')}}</div>
         <div class="details-youhui-monery" v-if="this.totalPrice >=50 ">-5.00</div>
         <div class="details-youhui-monery" v-else-if="this.totalPrice >= 100 ">-10.00</div>
       </div>
@@ -66,7 +72,7 @@ export default {
   mounted() {
       let price = 0;
       for (let i = 0; i < this.cartProduct.length; i++) {
-          price += Number(this.cartProduct[i].price) * this.cartProduct[i].count;
+          price += Number(this.cartProduct[i].activePrice) * this.cartProduct[i].count;
       }
       this.realAmount =  this.totalPrice = Math.round(price * 100) / 100;
       console.log(this.totalPrice,"this.totalPrice")
@@ -138,7 +144,6 @@ export default {
       }
       this.confirmPayment(data)
       this.$router.push('/orderdetail')
-      // confirmOrder
     },
 
   }
@@ -149,5 +154,10 @@ function sortNumber(a,b){//升序
 </script>
 
 <style scoped>
-
+.details-item li{
+  display: flex;
+  justify-content: space-between;
+  padding-right: .44rem;
+  
+}
 </style>

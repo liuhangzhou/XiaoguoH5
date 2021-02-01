@@ -3,7 +3,8 @@
     <div class="menu-right-content" v-if="list.length">
       <div class="menu-panel" v-for="item in list" :key="item.categoryId">
         <div class="menu-tit" v-if="item.categoryId">
-          <span>{{ item.categoryName }}</span>
+          <span></span>
+          {{ item.categoryName }}
         </div>
         <ul class="menu-panel-content" v-if="item.productList.length">
           <li
@@ -20,7 +21,7 @@
             <div class="goods-text">
               <p class="goods-name">{{ product.productName }}</p>
               <p class="goods-remarks">{{ product.remark }}</p>
-              <p class="goods-monery">{{ product.price }}</p>
+              <p class="goods-monery">{{ product.activePrice }}</p>
             </div>
             <div
               class="minus-goods"
@@ -80,7 +81,6 @@ export default {
         })
         this.setCategoryList(this.category)
         this.cartFood = this.cartProduct || [];
-        console.log(product)
         if (!product.count) {
           this.$set(product, 'count', 1)
           this.cartFood.push(product)
@@ -93,11 +93,9 @@ export default {
         }
         this.setCatProduct(this.cartFood)
       }
-      console.log(item, product.haveAttribute)
     },
     minusInCart(item, product) {
-      console.log(product.productId)
-      // console.log('进入购物车', productId)
+        this.cartFood = this.cartProduct || [];
       this.categoryList.forEach((item) => {
         if (item.categoryId === product.productId) {
           if (!item.count) {
@@ -110,9 +108,15 @@ export default {
       })
       this.setCategoryList(this.category)
       if (product.count === 1) {
+        let index = 0;
+        for(let n=0;n<this.cartFood.length;n++) {
+          if(this.cartFood[n].productId === product.productId) {
+            index = n;
+          }
+        }
         this.$set(product, 'count', 0)
-        this.cartFood.splice(product)
-      } else {
+        this.cartFood.splice(index,1)
+      }else {
         this.cartFood.forEach((v) => {
           if (v.productId === product.productId) {
             v.count--
@@ -120,8 +124,6 @@ export default {
         })
       }
       this.setCatProduct(this.cartFood)
-
-      console.log(item, product.haveAttribute)
     }
   }
 }

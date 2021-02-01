@@ -18,7 +18,7 @@
                 :class="{ current: option.isSelected }"
                 @click="selectProduct(info, option)"
               >
-                {{ option.optionName }} <span v-if="option.optionPrice"></span>
+                {{ option.optionName }} <span v-if="option.optionPrice">+ {{ option.optionPrice }}</span>
               </li>
             </ul>
           </div>
@@ -32,6 +32,7 @@
         </div>
       </div>
     </div>
+    <alert :show.sync="alertShow" :text="alertText" />
   </div>
 </template>
 
@@ -55,7 +56,10 @@ export default {
         selectedNum: 1,
         attributeList: []
       },
-      amount: 0.0
+      amount: 0.0,
+      alertShow: false,
+      alertText: null,
+      
     }
   },
   components: { Kv },
@@ -90,6 +94,7 @@ export default {
             option.isSelected = false
             if (mustChoose || leastChoose > 0) {
               if (optionList.indexOf(option) < leastChoose) {
+                this.amount = Number(this.amount) + Number(option.optionPrice);
                 option.isSelected = true
               }
             }
@@ -113,34 +118,39 @@ export default {
       })
       if (isSelected) {
         if (leastChoose > 0 && count == leastChoose) {
-          alert('最少选择' + leastChoose + '项')
+          this.alertShow = true;
+          this.alertText = this.$t('home.zsxz') + leastChoose + this.$t('home.xiang');
         } else {
           this.$set(optionBean, 'isSelected', false)
+          this.amount -= optionBean.optionPrice
         }
       } else {
         this.$set(optionBean, 'isSelected', true)
+        this.amount += optionBean.optionPrice
       }
-      var addition = 0.0
-      optionList.forEach((option) => {
-        if (option.isSelected) {
-          addition = addition + option.optionPrice
-        }
-      })
-      this.amount = this.amount + addition
     },
 
     addInCart() {
       this.productList = JSON.parse(JSON.stringify(this.thisObject));
+      let isOk = true;
       this.productList.attributeList.forEach(attribute=> {
-        delete attribute.leastChoose
-        delete attribute.mustChoose
+        // delete attribute.leastChoose
+        // delete attribute.mustChoose
+        let attributeLength = 0;
         for(let n=0;n<attribute.optionList.length;n++) {
           if(!attribute.optionList[n].isSelected) {
             attribute.optionList[n] = undefined
           }else{
+            attributeLength++;
             delete attribute.optionList[n].attributeId
             delete attribute.optionList[n].isSelected
           }
+        }
+        if(attribute.leastChoose !== attributeLength && attribute.leastChoose != 0) {
+          this.alertShow = true;
+          this.alertText = attribute.name + this.$t('home.bxxz') + attribute.leastChoose + this.$t('home.xiang');
+          isOk = false;
+          return false;
         }
       })
       // this.thisObject.attributeList.forEach(attribute=> {
@@ -150,9 +160,9 @@ export default {
       //     }
       //   })
       // })
-      console.log(this.productList.attributeList)
-
-      this.$router.push({ path: '/home', query: { 'productList': JSON.stringify(this.productList) } })
+      if(isOk) {
+        this.$router.push({ path: '/home', query: { 'productList': JSON.stringify(this.productList) } })
+      }
     }
   }
 }

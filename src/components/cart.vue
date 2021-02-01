@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mask" v-show="showCart"></div>
+    <div class="mask" v-show="showCart" @click.stop="showCart=false"></div>
     <div class="settlement">
       <div class="select-settlement" v-show="showCart">
         <div class="select-head flex flex-sc flex-vc">
@@ -36,11 +36,11 @@
                   </span> 
                 </p>
               </div>
-              <div class="select-monery">{{ item.price }}</div>
+              <div class="select-monery">{{ item.activePrice }}</div>
               <div class="add-remove flex flex-sc flex-vc">
-                <span class="add-btn" @click="remove(item.productId)"></span>
+                <span class="add-btn" @click="remove(item)"></span>
                 <span class="add-remove-number">{{ item.count }}</span>
-                <span class="remove-btn" @click="add(item.productId)"></span>
+                <span class="remove-btn" @click="add(item)"></span>
               </div>
             </li>
           </ul>
@@ -57,16 +57,19 @@
           </div>
         </div>
         <div class="settlement-monery">{{ this.totalPrice }}</div>
-        <div class="settlement-btn" @click="toOrder">{{$t("home.quxiadan")}}</div>
+        <div class="settlement-btn" @click="toOrder" >{{$t("home.quxiadan")}}</div>
       </div>
     </div>
+    <alert :show.sync="alertShow" :text="$t('home.xzsp')" />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'cart',
+
   data: () => {
     return {
       showCart: false,
@@ -74,13 +77,13 @@ export default {
       totalPrice: '',
       discount: 0,
       username: null,
+      alertShow: false
     }
   },
   computed: {
     ...mapGetters(['cartProduct', 'categoryList'])
   },
   beforeUpdate() {
-    console.log(this.cartProduct, 'cartProduct')
     this.updatedCart()
   },
   mounted() {
@@ -105,7 +108,7 @@ export default {
       let price = 0
       for (let i = 0; i < this.cartProduct.length; i++) {
         num += Number(this.cartProduct[i].count)
-        price += Number(this.cartProduct[i].price) * this.cartProduct[i].count
+        price += Number(this.cartProduct[i].activePrice) * this.cartProduct[i].count
       }
       this.totalPrice = Math.round(price * 100) / 100
       if (this.totalPrice >= 50 && this.totalPrice <= 100) {
@@ -125,11 +128,16 @@ export default {
       this.showCart = !this.showCart
     },
     toOrder() {
+      if(this.cartProduct.length <= 0) {
+        this.alertShow = true;
+        return false;
+      }
       this.$router.push('/order')
     },
-    remove(productId) {
+    remove(item) {
+      let productId = item.productId
       this.cartProduct.forEach((v, index) => {
-        if (v.productId === productId) {
+        if (v.productId === productId && JSON.stringify(v.attributes) === JSON.stringify(item.attributes)) {
           v.count--
           if (v.count == 0) {
             this.cartProduct.splice(index, 1)
@@ -144,10 +152,10 @@ export default {
       })
       this.updatedCart()
     },
-    add(productId) {
+    add(item) {
+      let productId = item.productId
       this.cartProduct.forEach((v) => {
-        if (v.productId === productId) {
-          console.log(v)
+        if (v.productId === productId && JSON.stringify(v.attributes) === JSON.stringify(item.attributes)) {
           v.count++
           this.categoryList.forEach((k, index) => {
             if (k.categoryId === productId) {

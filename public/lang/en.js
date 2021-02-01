@@ -71,5 +71,10 @@ const en = {
         "txwzxx": "wirte info", //填写完整信息
         "quxiao": "cancel", //取消
         "tijiao": "submit", //提交
+        "tishi": "tishi", // 提示
+        "xzsp":"xuanzeshangp",//请先选择商品
+        "zsxz": "zuishao", // 最少选择
+        "zhmmcw":"password error",//账号密码错误
+        "bxxz": "必须选择", //必须选择
    }
 }

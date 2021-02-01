@@ -7,7 +7,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueI18n from 'vue-i18n'
 import './assets/css/index.css' 
-
+import alert from '@/components/alert'
+Vue.component('alert',alert)
 
 Vue.use(VueI18n)
 Vue.use(VueAxios, axios)

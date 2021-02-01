@@ -332,48 +332,59 @@ body {
 .menu-left li {
   position: relative;
   width:100%;
-  height: 1.2rem;
+  height: 1rem;
   font-size: .28rem;
   color: rgba(55, 55, 55, 100);
-  line-height: 1.2rem;
+  line-height: 1rem;
   text-align: center;
-  border-bottom: 1px solid rgba(221, 220, 225, 100);
+  font-weight: 500;
 }
 
 .menu-left li.current {
-  background: #F28512;
-  color: #fff;
-}
-
-.menu-tit {
-  font-size: .32rem;
-  line-height: .44rem;
-  text-align: center;
-  color: rgba(16, 16, 16, 100);
-}
-
-.menu-tit span {
+  background: #f1f1f1;
+  color: #f37b1d;
   position: relative;
 }
 
-.menu-tit span:after {
+.menu-left li.current::after {
   content: "";
-  width: .5rem;
-  height: 1px;
-  background: #BBBBBB;
+  width: .08rem;
+  height: .3rem;
+  border-radius: .1rem 0 0 .1rem;
   position: absolute;
-  top: 50%;
-  left: -.68rem;
+  background-color: currentColor;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.menu-tit {
+  font-size: .28rem;
+  min-height: 1rem;
+  color: #666;
+  border-bottom: .5px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding:0 .2rem;
+  font-weight: 500;
+}
+
+.menu-tit span{
+  display: block;
+  margin-right: .3rem;
+  position: relative;
 }
 
 .menu-tit span:before {
   content: "";
-  width: .5rem;
-  height: 1px;
-  background: #BBBBBB;
+  width: .16rem;
+  height: .16rem;
+  background: #f37b1d;
   position: absolute;
   top: 50%;
-  right: -.68rem;
+  margin-top: -.08rem;
+  border-radius: 50%;
 }
 
 .menu-right {
@@ -386,15 +397,13 @@ body {
   overflow-y: scroll;
   width: 100%;
   height: 100%;
-  padding-right: .3rem;
   padding-bottom: 1.8rem;
-
 }
 
 .goods-img {
   width: 1.4rem;
   height: 1.4rem;
-  border-radius: .1rem 0px 0px .1rem;
+  border-radius: .1rem;
   overflow: hidden;
   font-size: 0;
   /* background: pink; */
@@ -402,14 +411,15 @@ body {
 
 .goods-name {
   font-size: .28rem;
-  color: rgba(16, 16, 16, 100);
+  color: #000;
   line-height: .4rem;
   margin-top: .08rem;
+  font-weight: 500;
 }
 
 .goods-remarks {
   font-size: .24rem;
-  color: rgba(16, 16, 16, 77);
+  color: #666;
   line-height: .34rem;
 }
 
@@ -447,41 +457,34 @@ body {
   margin-top: 0;
 }
 
-.menu-panel-content {
-  margin-top: .34rem;
-}
-
 .menu-panel-content li {
-  height: 1.4rem;
   position: relative;
-  padding-left: .28rem;
-  margin-top: .18rem;
+  padding:.13rem  0 ;
+  padding-left: .2rem;
 }
 
-.menu-panel-content li:first-child {
-  margin-top: 0;
-}
 .goods-num{
-  width: .5rem;
-  height: .5rem;
+  width: .4rem;
+  height: .44rem;
   overflow: hidden;
   position: absolute;
   top: 50%;
-  right: 0.4rem;
+  text-align: center;
+  right: 0.7rem;
   margin-top: -.3rem;
-  line-height: .5rem;
-  font-size: 24px;
+  line-height: .44rem;
+  font-size: .4rem;
 }
 .minus-goods {
-  width: .5rem;
-  height: .5rem;
+  width: .44rem;
+  height: .44rem;
   background: #F28512;
   border-radius: .25rem;
   overflow: hidden;
   position: absolute;
   top: 50%;
   margin-top: -.3rem;
-  right: 1rem;
+  right: 1.1rem;
 }
 .minus-goods:before {
   content: "";
@@ -495,15 +498,15 @@ body {
   -webkit-transform: translate(-50%, -50%);
 }
 .add-goods {
-  width: .5rem;
-  height: .5rem;
+  width: .44rem;
+  height: .44rem;
   background: #F28512;
   border-radius: .25rem;
   overflow: hidden;
   position: absolute;
   top: 50%;
   margin-top: -.3rem;
-  right: .04rem;
+  right: .26rem;
 }
 
 .add-goods:before {
@@ -828,7 +831,7 @@ body {
 .details-youhui {
   border-top: .04rem dashed rgba(231, 231, 233, 100);
   margin-top: .2rem;
-  padding: .12rem .66rem 0 .24rem;
+  padding: .26rem .66rem 0 .24rem;
 }
 
 .details-youhui-text {
@@ -974,7 +977,6 @@ body {
 
 .swiper-container {
   width: 100%;
-  height: 3.2rem;
 }
 
 .food-img {
@@ -1415,13 +1417,11 @@ padding: 0 .16rem;
 }
 .cont p input{
   border:1px solid #ccc;
-  padding: .1rem 0;
+  padding: .1rem .1rem;
+  border-radius: .06rem;
 }
 .warper2{
   font-size: .28rem;
-}
-.goloign{
-
 }
 .center{
   text-align: center;

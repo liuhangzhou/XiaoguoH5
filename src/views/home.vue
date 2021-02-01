@@ -41,9 +41,21 @@ export default {
     }else {
       next()
     }
-    
   },
   mounted() {
+    if(this.$route.query.refresh) {
+      this.setCatProduct([]);
+      let categoryList = [];
+      this.categoryList.forEach((item) => {
+        this.$set(item, 'count', 0)
+      })
+      this.setCategoryList(this.categoryList)
+      this.list.forEach(category=>{
+        category.productList.forEach(product=>{
+          product.count = 0;
+        })
+      })
+    }
     if(Object.keys(this.$route.query).length && this.isAdd) {
       this.queryProduct = JSON.parse(this.$route.query.productList);
       this.addInCart()
@@ -105,8 +117,8 @@ export default {
       this.list.forEach(category=> {
         category.productList.forEach(product=> {
           // 判断是否存在相同属性的商品
-          let hasProduct = false;
           if(product.productId == this.queryProduct.productId) {
+            let hasProduct = false;
             this.cartProduct.forEach(cart=> {
               if(JSON.stringify(cart.attributes) === JSON.stringify(this.queryProduct.attributeList)) {
                 cart.count += 1;
@@ -115,13 +127,25 @@ export default {
               }
             })
             if(!hasProduct) {
-              product.attributes = this.queryProduct.attributeList
-              product.count = 1;
-              productArray.push(product)
+              let productData = JSON.parse(JSON.stringify(product));
+              productData.attributes = this.queryProduct.attributeList;
+              productData.count = 1;
+              productArray.push(productData)
+              // 属性的价格
+              productData.attributes.forEach(attr=> {
+                attr.optionList.forEach(option=>{
+                  if(option) {
+                    console.log(productData.activePrice)
+                    console.log(option.optionPrice)
+                    productData.activePrice = Number(productData.activePrice) + Number(option.optionPrice)
+                    console.log(productData.price)
+                  }
+                })
+              })
             }
             this.setCatProduct(productArray)
             // 改变分类个数
-            this.setCategoryCount(category.categoryId)
+            this.setCategoryCount(category.categoryId);
           }
         })
       })

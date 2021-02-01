@@ -4,7 +4,7 @@
       <img class="logo" :src="storeInfo.msLogo" alt="" />
       <div class="head-text">
         <div class="barbecue-name">{{ storeInfo.msName }}</div>
-        <div class="number-diners">{{$t("home.yongcanrenshu")}}：2</div>
+        <div class="number-diners">{{$t("home.yongcanrenshu")}}：{{mealsNumber}}</div>
       </div>
     </div>
     <div class="head-bar flex flex-vc flex-sc">
@@ -41,7 +41,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'dining-information',
   computed: {
-    ...mapGetters(['storeInfo', 'storeCoupons'])
+    ...mapGetters(['storeInfo', 'storeCoupons','mealsNumber'])
   },
   data() {
     return {
@@ -56,7 +56,7 @@ export default {
       this.$router.push('/login')
     },
     goMyOrder() {
-      this.$router.push('/orderdetail')
+      this.$router.push('/orderdetail?source=myorder')
     }
   }
 }
