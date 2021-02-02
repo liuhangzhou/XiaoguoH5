@@ -263,7 +263,6 @@ body {
 }
 
 .head-bar {
-  padding: 0 1.06rem 0 .76rem;
   margin-top: .34rem;
 }
 
@@ -296,15 +295,14 @@ body {
   color: rgba(16, 16, 16, 100);
   position: absolute;
   top: .48rem;
-  right: .52rem;
+  right: .22rem;
   line-height: .44rem;
 }
 
 .login-icon {
-  width: .52rem;
+  width: .44rem;
   height: .44rem;
-  background: pink;
-  margin-right: .2rem;
+  margin-right: .1rem;
 }
 
 .menu {
@@ -312,7 +310,6 @@ body {
   height: calc(100vh - 2.6rem);
   background: #fff;
   overflow: hidden;
-  padding-top: .3rem;
 }
 
 .menu-left {
@@ -406,7 +403,6 @@ body {
   border-radius: .1rem;
   overflow: hidden;
   font-size: 0;
-  /* background: pink; */
 }
 
 .goods-name {
@@ -415,12 +411,22 @@ body {
   line-height: .4rem;
   margin-top: .08rem;
   font-weight: 500;
+  overflow:hidden; 
+  text-overflow:ellipsis;
+  display:-webkit-box; 
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2; 
 }
 
 .goods-remarks {
   font-size: .24rem;
   color: #666;
   line-height: .34rem;
+  overflow:hidden; 
+  text-overflow:ellipsis;
+  display:-webkit-box; 
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2; 
 }
 
 .goods-monery {
@@ -447,6 +453,7 @@ body {
   -webkit-justify-content: space-between;
   -moz-justify-content: space-between;
   justify-content: space-between;
+  width: 3.6rem;
 }
 
 .menu-panel {
@@ -468,12 +475,11 @@ body {
   height: .44rem;
   overflow: hidden;
   position: absolute;
-  top: 50%;
   text-align: center;
   right: 0.7rem;
-  margin-top: -.3rem;
   line-height: .44rem;
   font-size: .4rem;
+  bottom: .2rem;
 }
 .minus-goods {
   width: .44rem;
@@ -482,8 +488,7 @@ body {
   border-radius: .25rem;
   overflow: hidden;
   position: absolute;
-  top: 50%;
-  margin-top: -.3rem;
+  bottom: .2rem;
   right: 1.1rem;
 }
 .minus-goods:before {
@@ -504,8 +509,7 @@ body {
   border-radius: .25rem;
   overflow: hidden;
   position: absolute;
-  top: 50%;
-  margin-top: -.3rem;
+  bottom: .2rem;
   right: .26rem;
 }
 
@@ -641,13 +645,12 @@ body {
   line-height: .8rem;
 }
 
-.settlement-client-name i {
+.settlement-client-name img {
   width: .4rem;
   height: .4rem;
   border-radius: .5rem;
   overflow: hidden;
   margin-right: .1rem;
-  background: pink;
 }
 
 .select-content {

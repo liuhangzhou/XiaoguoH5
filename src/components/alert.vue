@@ -36,8 +36,8 @@ export default {
 </script>
 
 <style scoped>
-.dailog-btn{
-    background-color:#fff;
-    color: rgba(16, 16, 16, 100);
+
+.dailog-p1{
+  margin-top: .76rem;
 }
 </style>

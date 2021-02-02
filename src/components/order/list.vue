@@ -1,7 +1,7 @@
 <template>
   <div class="menu-right">
-    <div class="menu-right-content" v-if="list.length">
-      <div class="menu-panel" v-for="item in list" :key="item.categoryId">
+    <div class="menu-right-content" ref="list" @touchstart="gtouchstart()" @touchmove="gtouchmove()" @touchend="gtouchend()" v-if="list.length">
+      <div class="menu-panel" ref="panel" v-for="item in list" :key="item.categoryId">
         <div class="menu-tit" v-if="item.categoryId">
           <span></span>
           {{ item.categoryName }}
@@ -48,18 +48,60 @@ export default {
     return {
       cartFood: [],
       newCart: [],
-      category: []
+      category: [],
+      isScroll: false,
     }
   },
   computed: {
     ...mapGetters(['list', 'currentCategoryId', 'categoryList', 'cartProduct'])
   },
+  watch: {
+    '$store.state.currentCategoryId': {
+      handler(val){
+        if(!this.isScroll){
+          for(let n=0;n<this.list.length;n++) {
+            if(val == this.list[n].categoryId && this.$refs.panel) {
+              this.$refs.list.scrollTop = this.$refs.panel[n].offsetTop - this.$refs.panel[0].offsetTop
+            }
+          }
+        }
+      },
+      immediate: false,
+    }
+  },
+  mounted(){
+    
+  },
   methods: {
-    ...mapActions(['cartAdd', 'setCatProduct', 'setCategoryList']),
+    ...mapActions(['cartAdd', 'setCatProduct', 'setCategoryList','setCurrentCategoryId']),
     toDetail(productId, haveAttribute) {
       if (haveAttribute === '1') {
         this.$router.push({ path: '/detail', query: { productId } })
       }
+    },
+    gtouchstart(){
+      this.isScroll = true;
+      this.$refs.list.addEventListener('scroll', this.listenerScroll)
+    },
+    gtouchmove(){
+    },
+    gtouchend(){
+       this.$refs.list.removeEventListener('scroll', this.listenerScroll)
+       this.isScroll = false
+    },
+    listenerScroll() {
+        for(let n=0;n<this.list.length;n++) {
+          // this.$refs.list.scrollTop 必须 大于等于当前panel距离顶部的高度
+          // this.$refs.list.scrollTop 必须 小于后一个panel距离顶部的高度
+          if(
+            this.$refs.panel[n].offsetTop - this.$refs.panel[0].offsetTop <= this.$refs.list.scrollTop 
+            && this.$refs.panel[n+1].offsetTop - this.$refs.panel[0].offsetTop > this.$refs.list.scrollTop
+            && this.currentCategoryId != this.list[n].categoryId
+          ) {
+            this.setCurrentCategoryId(this.list[n].categoryId)
+            return false;
+          }
+        }
     },
     addInCart(item, product) {
       if (product.haveAttribute === '1') {

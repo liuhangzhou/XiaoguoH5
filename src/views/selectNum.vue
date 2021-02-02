@@ -1,7 +1,7 @@
 <template>
     <div class="selectNum-container">
         <div class="select-header">
-            请选择就餐人数
+            {{$t("home.zxjcrs")}}
         </div>
         <div class="select-number">
             <div class="number-container" v-for="n in 12" :key="n" @click="handleClick(n)">

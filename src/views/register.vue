@@ -72,7 +72,6 @@ export default {
       try {
         const data = await post(api.querySendValidateCode, params)
         console.log(data,"data")
-       
       } catch (e) {
         console.log('e', e)
       }
@@ -80,6 +79,11 @@ export default {
     async queryRegister(params) {
       try {
         const data = await post(api.queryRegister, params)
+        setTimeout(()=>{
+          this.gologin();
+        },3000)
+        this.alertShow = true;
+        this.alertText = $t('home.zccg');
       } catch (e) {
         console.log('e', e)
         this.alertShow = true;
@@ -135,10 +139,7 @@ export default {
       } catch(e) {
         console.log(e)
       }
-      
       this.queryRegister(this.registerData)
-      
-
     }
   }
 }

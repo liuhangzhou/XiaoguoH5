@@ -29,11 +29,13 @@ export default {
   computed: {
     ...mapGetters(['categoryList', 'currentCategoryId', 'categoryNum'])
   },
+  mounted() {
+    
+  },
   beforeUpdate() {},
   methods: {
     ...mapActions(['setCurrentCategoryId']),
     toggleCategory(categoryId) {
-      console.log(this.categoryList, 'categoryList')
       this.setCurrentCategoryId(categoryId)
     }
   }

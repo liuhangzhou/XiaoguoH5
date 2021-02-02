@@ -8,15 +8,22 @@
       </div>
     </div>
     <div class="head-bar flex flex-vc flex-sc">
-      <div class="favourable flex flex-vc" v-if="storeCoupons.length > 0">
+      <div class="favourable flex flex-vc" >
+      <!-- <div class="favourable flex flex-vc" v-if="storeCoupons.length > 0"> -->
         <img
           class="favourable-icon"
           src="../../assets/img/ic_coupons.png"
           alt=""
         />
-        <li v-for="coupons in storeCoupons" :key="coupons.id">
-          {{$t("home.man")}} {{ coupons.getLeastCost }}{{$t("home.jian")}} {{ coupons.getReduceCost }};
+        <li>
+          {{$t("home.man")}} 50{{$t("home.jian")}} 5;
         </li>
+        <li>
+          {{$t("home.man")}} 100{{$t("home.jian")}} 10;
+        </li>
+        <!-- <li v-for="coupons in storeCoupons" :key="coupons.id">
+          {{$t("home.man")}} {{ coupons.getLeastCost }}{{$t("home.jian")}} {{ coupons.getReduceCost }};
+        </li> -->
       </div>
       <div class="my-order flex flex-vc" @click="goMyOrder">
         <img
@@ -27,10 +34,10 @@
       </div>
     </div>
     <div class="login flex flex-vc" v-if="username">
-      <i class="login-icon"></i>{{username}}
+      <img class="login-icon" src="../../assets/img/ic_user.png" alt="" srcset="">{{username}}
     </div>
     <div class="login flex flex-vc" @click="aa" v-else>
-      <i class="login-icon"></i>{{$t("home.weidenglu")}}
+      <img class="login-icon" src="../../assets/img/ic_user.png" alt="" srcset="">{{$t("home.weidenglu")}}
     </div>
   </div>
 </template>

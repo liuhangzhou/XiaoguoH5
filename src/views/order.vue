@@ -91,8 +91,9 @@ export default {
     async confirmPayment(params) {
         try {
           const data = await post(api.querySubmit, params)
-          console.log(data,"data")
-
+          if(data){
+            this.$router.push('/orderdetail')
+          }
         } catch (e) {
           console.log('e', e)
         }
@@ -143,7 +144,6 @@ export default {
           productList:JSON.stringify(cartProductArr),//商品json
       }
       this.confirmPayment(data)
-      this.$router.push('/orderdetail')
     },
 
   }

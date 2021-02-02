@@ -11,7 +11,10 @@
           <div class="remove-select" @click="clearCart">{{$t("home.qinkong")}}</div>
         </div>
         <div class="settlement-client">
-          <div class="settlement-client-name flex flex-vc"><i></i>{{username}}</div>
+          <div class="settlement-client-name flex flex-vc">
+            <img src="../assets/img/ic_user.png" alt="" srcset="">
+            {{username}}
+          </div>
         </div>
         <div class="select-content">
           <ul>

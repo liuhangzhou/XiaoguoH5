@@ -1,80 +1,82 @@
 const en = {
     home: {
-        "weidenglu": 'no login', // 未登录
-        "wodedingdan": 'my order', // 我的订单
-        "man": "man", //满
-        "jian": "jian", //减
-        "yongcanrenshu": "number", // 用餐人数
-        "qinkong": "clear", // 清空
-        "quxiadan": "go order", // 去下单
-        "yijian": "yijianwuyuan", //已减5元,再买
-        "kejian": "kejianshiyuan", //可减10元
-        "jiarugouwuche": "jiarugouwuche", // 加入购物车
-        "fhsy": "go home", // 返回首页
-        "denglu": "login", // 登录
-        "zhuce": "register", // 注册
-        "shouji": "telphone", // 手机
-        "youxiang": "mail", // 邮箱
-        "yxhmm": "mail or telphone", //电子邮箱或手机号码
-        "mima": "password", //密码
-        "srmm": "input passwprd", //输入密码
-        "xlsk": "new people", //新来食客
-        "quzhuce": "go register", // 去注册
-        "txsjh": "input telphone", // 填写手机号
-        "txmm": "input password", // 填写密码
-        "ydl": "is login", // 已登录
-        "xdsj": "order time",// 下单时间
-        "xdcg": "order success",// 下单成功
-        "qdd": "loading",// 美食正在做准备中，请耐心等待
-        "jiacai": "add cai",// 如需加菜，继续点餐
-        "queding": "sure",// 确定
-        "jxdc": "add can",// 继续点餐
-        "xzzf": "now pay",// 现在支付
-        "zhuohao": "zhuohao", //桌号
-        "mjyh": "manjianyouhui", //满减优惠
-        "heji": "all", //合计
-        "wzxx": "wozaixiangxiang", //我再想想
-        "qrxd": "querenxiadan", //确认下单
-        "zfje": "zhifujine", //支付金额
-        "zje": "zhongjine", //总金额
-        "ddh": "order no", //订单号
-        "zhuangtai": "status", //状态
-        "fkcg": "pay success", //付款成功
-        "fksb": "pay fail", //付款失败
-        "jxz": "loading", //进行中
-        "yuan": "yuan", //元
-        "gongji": "all", //共计
-        "xiang": "xiang", //项
-        "ddxq": "order detail", //订单详情
-        "xiaoji": "xiaoji", //小计
-        "xfs": "xiaofeshui", //消费税
-        "xiaofei": "xiaofe", //小费
-        "mjyh": "manjian", //满减优惠
-        "yhq": "coupon", //优惠券
-        "zwky": "no any", //暂无可用
-        "sfje": "pay", //实付金额
-        "zffs": "pay type", //支付方式
-        "qrzf": "pay", //确认支付
-        "xingming": "name", //姓名
-        "chenghu": "nikename", //称呼
-        "dhsr": "input", //单行输入
-        "xingbie": "sex", //性别
-        "shoujihao": "telphone number", //手机号
-        "yanzhengma": "code", //验证码
-        "qrmm": "sure password", //确认密码
-        "yshy": "is member", //如果已是会员
-        "qudenglu": "go login", //去登录
-        "nan": "gender", //男
-        "nv": "girl", //女
-        "cxfs": "chongxinfasong", //重新发送
-        "hqyzm": "send code", //获取验证码
-        "txwzxx": "wirte info", //填写完整信息
-        "quxiao": "cancel", //取消
-        "tijiao": "submit", //提交
-        "tishi": "tishi", // 提示
-        "xzsp":"xuanzeshangp",//请先选择商品
-        "zsxz": "zuishao", // 最少选择
-        "zhmmcw":"password error",//账号密码错误
-        "bxxz": "必须选择", //必须选择
+        "weidenglu": 'Not Logged In', // 未登录
+        "wodedingdan": 'My Order', // 我的订单
+        "man": "Min. Spend", //满
+        "jian": "Minus", //减
+        "yongcanrenshu": "Number Of Diners", // 用餐人数
+        "qinkong": "Delete", // 清空
+        "quxiadan": "Order", // 去下单
+        "yijian": "RM 5 Off , Buy Again", //已减5元,再买
+        "kejian": "RM 10 Off Available", //可减10元
+        "jiarugouwuche": "Add to cart", // 加入购物车
+        "fhsy": "Back to home page", // 返回首页
+        "denglu": "Login", // 登录
+        "zhuce": "Register", // 注册
+        "shouji": "Phone Number", // 手机
+        "youxiang": "Email", // 邮箱
+        "yxhmm": "Email or Phone Number", //电子邮箱或手机号码
+        "mima": "Password", //密码
+        "srmm": "Fill in password", //输入密码
+        "xlsk": "New Diners", //新来食客
+        "quzhuce": "Please Register", // 去注册
+        "txsjh": "Fill in telephone number", // 填写手机号
+        "txmm": "Fill in password", // 填写密码
+        "ydl": "Logged In", // 已登录
+        "xdsj": "Order Time",// 下单时间
+        "xdcg": "Order Success",// 下单成功
+        "qdd": "The Food is being prepared , please be patient",// 美食正在做准备中，请耐心等待
+        "jiacai": "Add On , Continue Order",// 如需加菜，继续点餐
+        "queding": "Confirm",// 确定
+        "jxdc": "Continue Order",// 继续点餐
+        "xzzf": "Pay Now",// 现在支付
+        "zhuohao": "Table Number", //桌号
+        "mjyh": "Full Discount", //满减优惠
+        "heji": "Total", //合计
+        "wzxx": "Let Me Think Again", //我再想想
+        "qrxd": "Conform", //确认下单
+        "zfje": "Paid Amount", //支付金额
+        "zje": "Total Amount", //总金额
+        "ddh": "Order Number", //订单号
+        "zhuangtai": "Status", //状态
+        "fkcg": "Payment Successfully", //付款成功
+        "fksb": "Payment Fail", //付款失败
+        "jxz": "In Process", //进行中
+        "yuan": "RM", //元
+        "gongji": "Total", //共计
+        "xiang": "Unit", //项
+        "ddxq": "Order Details", //订单详情
+        "xiaoji": "Subtotal", //小计
+        "xfs": "Sales Tax", //消费税
+        "xiaofei": "Tip", //小费
+        "mjyh": "Full Discount", //满减优惠
+        "yhq": "Coupon", //优惠券
+        "zwky": "Unavailable", //暂无可用
+        "sfje": "Actual Paid Amount", //实付金额
+        "zffs": "Payment Method", //支付方式
+        "qrzf": "Comfirm", //确认支付
+        "xingming": "Name", //姓名
+        "chenghu": "Nikename", //称呼
+        "dhsr": "Please Fill In", //单行输入
+        "xingbie": "Gender", //性别
+        "shoujihao": "Telephone Number", //手机号
+        "yanzhengma": "Tac", //验证码
+        "qrmm": "Confirm", //确认密码
+        "yshy": "If you are member", //如果已是会员
+        "qudenglu": "Log In", //去登录
+        "nan": "Male", //男
+        "nv": "Female", //女
+        "cxfs": "Resend", //重新发送
+        "hqyzm": "Request for Tac", //获取验证码
+        "txwzxx": "Fill in the complete information", //填写完整信息
+        "quxiao": "Cancel", //取消
+        "tijiao": "Submit", //提交
+        "tishi": "Notice", // 提示
+        "xzsp":"Please Choose Product",//请先选择商品
+        "zsxz": "Min. Selection", // 最少选择
+        "zhmmcw":"Password Wrong",//账号密码错误
+        "bxxz": "Must Choose", //必须选择
+        "zxjcrs":"Number Of Diners", //请选择就餐人数
+        "zccg":"Resgister Complete , Open login page in 3 secounds", //注册成功
    }
 }

@@ -148,7 +148,7 @@ export default {
         }
         if(attribute.leastChoose !== attributeLength && attribute.leastChoose != 0) {
           this.alertShow = true;
-          this.alertText = attribute.name + this.$t('home.bxxz') + attribute.leastChoose + this.$t('home.xiang');
+          this.alertText = '[' + attribute.name + ']' + this.$t('home.bxxz') + attribute.leastChoose + this.$t('home.xiang');
           isOk = false;
           return false;
         }
