@@ -30,7 +30,7 @@
         </li>
         
       </ul>
-      <div class="details-youhui flex flex-sc flex-vc">
+      <div class="details-youhui flex flex-sc flex-vc" v-if="couponIndex !== -1">
         <div class="details-youhui-text flex flex-vc">
           <img
           class="favourable-icon"
@@ -38,8 +38,7 @@
           alt=""
         />
         {{$t('home.mjyh')}}</div>
-        <div class="details-youhui-monery" v-if="this.totalPrice >=50 ">-5.00</div>
-        <div class="details-youhui-monery" v-else-if="this.totalPrice >= 100 ">-10.00</div>
+        <div class="details-youhui-monery">-{{storeCoupons[couponIndex].reduceCost}}</div>
       </div>
       <div class="total flex flex-sc flex-vc">
         <div class="total-text">{{$t('home.heji')}}</div>
@@ -63,11 +62,12 @@ export default {
     return {
       totalPrice:'',
       realAmount:'',
-      list:[]
+      list:[],
+      couponIndex: -1
     };
   },
   computed: {
-    ...mapGetters(["cartProduct", "categoryList"]),
+    ...mapGetters(["cartProduct", "categoryList", "storeCoupons"]),
   },
   mounted() {
       let price = 0;
@@ -76,12 +76,21 @@ export default {
       }
       this.realAmount =  this.totalPrice = Math.round(price * 100) / 100;
       console.log(this.totalPrice,"this.totalPrice")
-      if(this.totalPrice >= 50){
-        this.realAmount -= 5
+      for(let i=0;i< this.storeCoupons.length;i++){
+        if(this.storeCoupons[i].leastCost < this.totalPrice) {
+          this.couponIndex = i;
+        }
       }
-      if(this.totalPrice >= 100){
-        this.realAmount - 100
+      if(this.couponIndex !== -1) {
+        this.realAmount -= this.storeCoupons[this.couponIndex].reduceCost
+        // this.discount = 
+        // this.$t('home.yijian') + this.storeCoupons[couponIndex].reduceCost + 
+        // this.$t('home.zaimai') + (this.storeCoupons[couponIndex+1].leastCost-this.totalPrice) + 
+        // this.$t('home.kejian') + this.storeCoupons[couponIndex+1].reduceCost + this.$t('home.kejianhou')
       }
+
+
+      
   },
   beforeUpdate() {
 

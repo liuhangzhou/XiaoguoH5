@@ -15,15 +15,9 @@
           src="../../assets/img/ic_coupons.png"
           alt=""
         />
-        <li>
-          {{$t("home.man")}} 50{{$t("home.jian")}} 5;
+        <li v-for="coupons in storeCoupons" :key="coupons.id">
+          {{$t("home.man")}} {{ coupons.leastCost }}{{$t("home.jian")}} {{ coupons.reduceCost }};
         </li>
-        <li>
-          {{$t("home.man")}} 100{{$t("home.jian")}} 10;
-        </li>
-        <!-- <li v-for="coupons in storeCoupons" :key="coupons.id">
-          {{$t("home.man")}} {{ coupons.getLeastCost }}{{$t("home.jian")}} {{ coupons.getReduceCost }};
-        </li> -->
       </div>
       <div class="my-order flex flex-vc" @click="goMyOrder">
         <img

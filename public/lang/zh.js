@@ -7,8 +7,11 @@ const zh = {
         "yongcanrenshu": "用餐人数", // 用餐人数
         "qinkong": "清空", // 清空
         "quxiadan": "去下单", // 去下单
-        "yijian": "已减5元,再买", //已减5元,再买
-        "kejian": "可减10元", //可减10元
+        // 已减5元，再买n元可减10元
+        "yijian": "已减", //已减5元,再买
+        "zaimai": "元,再买", 
+        "kejian": "可减", //可减10元
+        "kejianhou": "元", 
         "jiarugouwuche": "加入购物车", // 加入购物车
         "fhsy": "返回首页", // 返回首页
         "denglu": "登录", // 登录

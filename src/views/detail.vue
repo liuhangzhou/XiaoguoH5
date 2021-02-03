@@ -15,7 +15,7 @@
               <li
                 v-for="option in info.optionList"
                 :key="option.id"
-                :class="{ current: option.isSelected }"
+                :class="{ disabled: isDisabled ,current: option.isSelected }"
                 @click="selectProduct(info, option)"
               >
                 {{ option.optionName }} <span v-if="option.optionPrice">+ {{ option.optionPrice }}</span>
@@ -64,7 +64,16 @@ export default {
   },
   components: { Kv },
   computed: {
-    ...mapGetters(['detailInformation'])
+    ...mapGetters(['detailInformation']),
+    isDisabled() {
+      this.detailInformation.attributeList.forEach(attr=> {
+        if(attr.leastChoose > 1 && attr.count == attr.leastChoose && !attr.isSelected) {
+          console.log(attr,'未选择')
+          return false;
+        }
+      })
+      
+    }
   },
   mounted() {
     const { productId } = this.$route.query
@@ -78,6 +87,9 @@ export default {
     }
     this.queryProductionDetail(params)
   },
+  watch: {
+    // 当选项改变的时候监听变化，使是否不可点击
+  },
   methods: {
     ...mapActions(['setDetailInformation']),
     async queryProductionDetail(params) {
@@ -90,8 +102,10 @@ export default {
           const { mustChoose = Boolean } = attribute
           const { leastChoose = Number } = attribute
           const { optionList = [] } = attribute
+          attribute.count = leastChoose;
           optionList.forEach((option) => {
             option.isSelected = false
+            option.isDisabled = false
             if (mustChoose || leastChoose > 0) {
               if (optionList.indexOf(option) < leastChoose) {
                 this.amount = Number(this.amount) + Number(option.optionPrice);
@@ -111,23 +125,46 @@ export default {
       var count = 0
       var leastChoose = attribute.leastChoose
       const { optionList = [] } = attribute
+      if(optionList.length == leastChoose) {
+        this.showAlert(leastChoose)
+        return false;
+      }
       optionList.forEach((option) => {
         if (option.isSelected) {
           count = count + 1
         }
       })
-      if (isSelected) {
+      attribute.count = count;
+      // 单选
+      if(leastChoose == 1) {
         if (leastChoose > 0 && count == leastChoose) {
-          this.alertShow = true;
-          this.alertText = this.$t('home.zsxz') + leastChoose + this.$t('home.xiang');
-        } else {
+          attribute.optionList.forEach(attr=>{
+            attr.isSelected = false;
+          })
+        }
+      }
+      // 多选
+      if(leastChoose > 1 && count == leastChoose && !isSelected) {
+        return false;
+      }
+
+      if (isSelected) {
+        if (leastChoose == 1 ){
+          this.showAlert(leastChoose)
+          this.$set(optionBean, 'isSelected', true)
+        }else {
           this.$set(optionBean, 'isSelected', false)
-          this.amount -= optionBean.optionPrice
+          this.amount = (Math.round(this.amount*100) - Math.round(optionBean.optionPrice*100))/100 
         }
       } else {
         this.$set(optionBean, 'isSelected', true)
-        this.amount += optionBean.optionPrice
+        this.amount = (Math.round(this.amount*100) + Math.round(optionBean.optionPrice*100))/100 
       }
+      
+    },
+    showAlert(leastChoose){
+      this.alertShow = true;
+      this.alertText = this.$t('home.zsxz') + leastChoose + this.$t('home.xiang');
     },
 
     addInCart() {

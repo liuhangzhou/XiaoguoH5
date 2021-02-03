@@ -135,10 +135,7 @@ export default {
               productData.attributes.forEach(attr=> {
                 attr.optionList.forEach(option=>{
                   if(option) {
-                    console.log(productData.activePrice)
-                    console.log(option.optionPrice)
                     productData.activePrice = Number(productData.activePrice) + Number(option.optionPrice)
-                    console.log(productData.price)
                   }
                 })
               })

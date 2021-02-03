@@ -49,7 +49,7 @@
           </ul>
         </div>
       </div>
-      <div class="settlement-tips" v-if="this.discount > 0">
+      <div class="settlement-tips" v-if="this.discount">
         {{ this.discount }}
       </div>
       <div class="settlement-zd">
@@ -78,13 +78,16 @@ export default {
       showCart: false,
       cartTotal: '',
       totalPrice: '',
-      discount: 0,
+      discount: null, //再买
+      coupon: {
+      },
+      
       username: null,
       alertShow: false
     }
   },
   computed: {
-    ...mapGetters(['cartProduct', 'categoryList'])
+    ...mapGetters(['cartProduct', 'categoryList','storeCoupons'])
   },
   beforeUpdate() {
     this.updatedCart()
@@ -114,17 +117,27 @@ export default {
         price += Number(this.cartProduct[i].activePrice) * this.cartProduct[i].count
       }
       this.totalPrice = Math.round(price * 100) / 100
-      if (this.totalPrice >= 50 && this.totalPrice <= 100) {
-        this.totalPrice - 5
+      let couponIndex = -1;
+      if(this.storeCoupons.length !== 0) {
+        for(let i=0;i< this.storeCoupons.length;i++){
+          if(this.storeCoupons[i].leastCost < this.totalPrice) {
+            couponIndex = i;
+          }
+        }
+        if(couponIndex !== -1) {
+          this.totalPrice -= this.storeCoupons[couponIndex].reduceCost
+          this.discount = 
+          this.$t('home.yijian') + this.storeCoupons[couponIndex].reduceCost + 
+          this.$t('home.zaimai') + (this.storeCoupons[couponIndex+1].leastCost*100 - Math.round(this.totalPrice)*100)/100 + 
+          this.$t('home.kejian') + this.storeCoupons[couponIndex+1].reduceCost + this.$t('home.kejianhou')
+        }else {
+          this.discount = 
+          this.$t('home.yijian') + 0 + 
+          this.$t('home.zaimai') + (this.storeCoupons[couponIndex+1].leastCost*100 - Math.round(this.totalPrice)*100)/100 + 
+          this.$t('home.kejian') + this.storeCoupons[couponIndex+1].reduceCost + this.$t('home.kejianhou')
+        }
       }
-      if (this.totalPrice >= 100) {
-        this.totalPrice - 10
-      }
-      if (this.totalPrice >= 50) {
-        this.discount =
-          this.$t('yijian') + Number(100 - this.totalPrice) + this.$t('kejian')
-          // '已减5元,再买' + Number(100 - this.totalPrice) + '可减10元'
-      }
+      
       this.cartTotal = num
     },
     toggleCartDetail() {

@@ -7,8 +7,11 @@ const en = {
         "yongcanrenshu": "Number Of Diners", // 用餐人数
         "qinkong": "Delete", // 清空
         "quxiadan": "Order", // 去下单
-        "yijian": "RM 5 Off , Buy Again", //已减5元,再买
-        "kejian": "RM 10 Off Available", //可减10元
+        // 已减5元，再买n元可减10元
+        "yijian": "RM ", //已减
+        "zaimai": " Off , Buy Again",// 元,再买
+        "kejian": "RM ", //可减10元
+        "kejianhou": " Off Available", // n元
         "jiarugouwuche": "Add to cart", // 加入购物车
         "fhsy": "Back to home page", // 返回首页
         "denglu": "Login", // 登录
