@@ -103,6 +103,17 @@ export default {
           }
         }
     },
+    getCategoryId(productId) {
+      let categoryId = null;
+      this.list.forEach(category=> {
+        category.productList.forEach(goods=>{
+          if(goods.productId == productId) {
+            categoryId = category.categoryId;
+          }
+        })
+      })
+      return categoryId;
+    },
     addInCart(item, product) {
       if (product.haveAttribute === '1') {
         this.$router.push({
@@ -111,8 +122,10 @@ export default {
         })
       } else {
         // console.log('进入购物车', productId)
+        let categoryId = this.getCategoryId(product.productId)
+        console.log(categoryId)
         this.categoryList.forEach((item) => {
-          if (item.categoryId === product.productId) {
+          if (item.categoryId === categoryId) {
             if (!item.count) {
               this.$set(item, 'count', 1)
             } else {
@@ -137,9 +150,10 @@ export default {
       }
     },
     minusInCart(item, product) {
-        this.cartFood = this.cartProduct || [];
+      this.cartFood = this.cartProduct || [];
+      let categoryId = this.getCategoryId(product.productId)
       this.categoryList.forEach((item) => {
-        if (item.categoryId === product.productId) {
+        if (item.categoryId === categoryId) {
           if (!item.count) {
             this.$set(item, 'count', 1)
           } else {
@@ -169,6 +183,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped></style>

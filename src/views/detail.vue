@@ -15,7 +15,7 @@
               <li
                 v-for="option in info.optionList"
                 :key="option.id"
-                :class="{ disabled: isDisabled ,current: option.isSelected }"
+                :class="{isDisabled: option.isDisabled,current: option.isSelected }"
                 @click="selectProduct(info, option)"
               >
                 {{ option.optionName }} <span v-if="option.optionPrice">+ {{ option.optionPrice }}</span>
@@ -65,15 +65,7 @@ export default {
   components: { Kv },
   computed: {
     ...mapGetters(['detailInformation']),
-    isDisabled() {
-      this.detailInformation.attributeList.forEach(attr=> {
-        if(attr.leastChoose > 1 && attr.count == attr.leastChoose && !attr.isSelected) {
-          console.log(attr,'未选择')
-          return false;
-        }
-      })
-      
-    }
+    
   },
   mounted() {
     const { productId } = this.$route.query
@@ -89,6 +81,27 @@ export default {
   },
   watch: {
     // 当选项改变的时候监听变化，使是否不可点击
+    '$store.state.detailInformation': {
+      handler(val) {
+        val.attributeList.forEach(attr=> {
+          let count = 0;
+          attr.optionList.forEach(option=>{
+            if (option.isSelected) {
+              count = count + 1
+            }
+          })
+          if(attr.leastChoose > 1 && count == attr.leastChoose) {
+            attr.optionList.forEach(option=>{
+              if(!option.isSelected) {
+                option.isDisabled = true;
+              }
+            })
+          }
+        })
+      },
+      deep: true
+
+    }
   },
   methods: {
     ...mapActions(['setDetailInformation']),
@@ -102,7 +115,6 @@ export default {
           const { mustChoose = Boolean } = attribute
           const { leastChoose = Number } = attribute
           const { optionList = [] } = attribute
-          attribute.count = leastChoose;
           optionList.forEach((option) => {
             option.isSelected = false
             option.isDisabled = false
@@ -130,26 +142,29 @@ export default {
         return false;
       }
       optionList.forEach((option) => {
+        option.isDisabled = false;
         if (option.isSelected) {
           count = count + 1
         }
       })
-      attribute.count = count;
       // 单选
-      if(leastChoose == 1) {
-        if (leastChoose > 0 && count == leastChoose) {
-          attribute.optionList.forEach(attr=>{
-            attr.isSelected = false;
-          })
-        }
+      if(leastChoose == 1 && count == leastChoose) {
+        attribute.optionList.forEach(attr=>{
+          if(attr.isSelected) {
+            this.amount = (Math.round(this.amount*100) - Math.round(attr.optionPrice*100))/100 
+          }
+          attr.isSelected = false;
+        })
       }
       // 多选
       if(leastChoose > 1 && count == leastChoose && !isSelected) {
         return false;
       }
 
+
       if (isSelected) {
         if (leastChoose == 1 ){
+          this.amount = (Math.round(this.amount*100) + Math.round(optionBean.optionPrice*100))/100 
           this.showAlert(leastChoose)
           this.$set(optionBean, 'isSelected', true)
         }else {

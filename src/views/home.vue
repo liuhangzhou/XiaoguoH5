@@ -135,7 +135,7 @@ export default {
               productData.attributes.forEach(attr=> {
                 attr.optionList.forEach(option=>{
                   if(option) {
-                    productData.activePrice = Number(productData.activePrice) + Number(option.optionPrice)
+                    productData.activePrice = (Math.round(productData.activePrice*100) + Math.round(option.optionPrice*100))/100
                   }
                 })
               })

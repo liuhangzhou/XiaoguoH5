@@ -87,7 +87,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['cartProduct', 'categoryList','storeCoupons'])
+    ...mapGetters(['cartProduct', 'categoryList','storeCoupons', 'list'])
   },
   beforeUpdate() {
     this.updatedCart()
@@ -101,6 +101,11 @@ export default {
     clearCart() {
       this.categoryList.forEach((k, index) => {
         k.count = 0
+      })
+      this.list.forEach(attr=>{
+        attr.productList.forEach(product=>{
+          product.count = 0;
+        })
       })
       // console.log(this.cartProduct, 'this.cartProduct')
       this.setCatProduct([])
@@ -124,12 +129,15 @@ export default {
             couponIndex = i;
           }
         }
-        if(couponIndex !== -1) {
-          this.totalPrice -= this.storeCoupons[couponIndex].reduceCost
+        if(couponIndex !== -1 && couponIndex!=this.storeCoupons.length-1) {
+          this.totalPrice = (Math.round(this.totalPrice * 100) - Math.round(this.storeCoupons[couponIndex].reduceCost*100))/100
           this.discount = 
           this.$t('home.yijian') + this.storeCoupons[couponIndex].reduceCost + 
           this.$t('home.zaimai') + (this.storeCoupons[couponIndex+1].leastCost*100 - Math.round(this.totalPrice)*100)/100 + 
           this.$t('home.kejian') + this.storeCoupons[couponIndex+1].reduceCost + this.$t('home.kejianhou')
+        }else if(couponIndex ==this.storeCoupons.length-1){
+          this.discount = 
+          this.$t('home.yijian') + this.storeCoupons[couponIndex].reduceCost 
         }else {
           this.discount = 
           this.$t('home.yijian') + 0 + 
@@ -150,8 +158,22 @@ export default {
       }
       this.$router.push('/order')
     },
+    getCategoryId(productId) {
+      let categoryId = null;
+      this.list.forEach(category=> {
+        category.productList.forEach(goods=>{
+          if(goods.productId == productId) {
+            categoryId = category.categoryId;
+          }
+        })
+      })
+      console.log(categoryId)
+      return categoryId;
+    },
     remove(item) {
       let productId = item.productId
+
+      let categoryId = this.getCategoryId(productId)
       this.cartProduct.forEach((v, index) => {
         if (v.productId === productId && JSON.stringify(v.attributes) === JSON.stringify(item.attributes)) {
           v.count--
@@ -159,7 +181,7 @@ export default {
             this.cartProduct.splice(index, 1)
           }
           this.categoryList.forEach((k, index) => {
-            if (k.categoryId === productId) {
+            if (k.categoryId === categoryId) {
               k.count--
             }
           })
@@ -170,11 +192,12 @@ export default {
     },
     add(item) {
       let productId = item.productId
+      let categoryId = this.getCategoryId(productId)
       this.cartProduct.forEach((v) => {
         if (v.productId === productId && JSON.stringify(v.attributes) === JSON.stringify(item.attributes)) {
           v.count++
           this.categoryList.forEach((k, index) => {
-            if (k.categoryId === productId) {
+            if (k.categoryId === categoryId) {
               k.count++
             }
           })
