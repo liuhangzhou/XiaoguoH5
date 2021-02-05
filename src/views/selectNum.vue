@@ -15,6 +15,13 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'selectNum',
+    created() {
+        let msCode = this.$route.query.msCode ? this.$route.query.msCode : -1;
+        let tableNo = this.$route.query.tableNo ? this.$route.query.tableNo : -1;
+        console.log(msCode,tableNo)
+        sessionStorage.setItem('msCode',msCode)
+        sessionStorage.setItem('tableNo',tableNo)
+    },
     computed: {
         ...mapGetters(['mealsNumber'])
     },

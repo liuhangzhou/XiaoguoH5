@@ -17,7 +17,7 @@
               <p>$ {{confirmData.exciseAmount}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
-              <p>{{$t('home.xiaofe')}}</p>
+              <p>{{$t('home.xiaofei')}}</p>
               <p>$ {{confirmData.tipAmount}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
