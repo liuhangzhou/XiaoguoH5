@@ -135,7 +135,7 @@ export default {
               productData.attributes.forEach(attr=> {
                 attr.optionList.forEach(option=>{
                   if(option) {
-                    productData.activePrice = (Math.round(productData.activePrice*100) + Math.round(option.optionPrice*100))/100
+                    productData.activePrice = ((Math.round(productData.activePrice*100) + Math.round(option.optionPrice*100))/100).toFixed(2)
                   }
                 })
               })
@@ -164,3 +164,13 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+.menu {
+  width: 100%;
+  height: calc(100vh - 4.5rem);
+  background: #fff;
+  overflow: hidden;
+}
+</style>

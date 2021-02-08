@@ -21,15 +21,16 @@
               <div class="details-text-p2" v-else>
                 <span v-for="attr in product.attribute" :key="attr.id">
                     <span v-for="(attrs,index) in attr.optionList" :key="index">
-                      <span v-if="attrs">{{attrs.optionName}};</span>
+                      <span v-if="attrs">{{attrs.optionName}}<span v-if="index < attr.optionList.length-2">/</span></span>
                     </span>  
                 </span> 
               </div>
+              <div class="details-text-p2">x <span>{{product.count}}</span></div>
             </div>
           </div>
           <div>
-            <div class="details-monery">$ {{product.price}}</div>
-            <div class="details-number">x <span>{{product.count}}</span></div>
+            <div class="details-monery">${{product.price}}</div>
+            
           </div>
         </li>
       </ul>
@@ -42,9 +43,8 @@
         <div class="total-monery">$ 213.40</div>
       </div> -->
     <!-- </div> -->
-    
   </div>
-  <div class="mask" v-if="showMask && showXiaDan">
+  <!-- <div class="mask" v-if="showMask && showXiaDan">
       <div class="dailog">
         <div class="dailog-tit">{{$t('home.xdcg')}}</div>
         <div class="dailog-content">
@@ -52,11 +52,16 @@
         </div>
         <div class="dailog-btn" @click="clearMask">{{$t('home.queding')}}</div>
       </div>
-  </div>
-    <div class="xiadan flex flex-vc flex-hc" v-if="showXiaDan">
-      <div class="xiadan-btn-left" @click="toHome">{{$t('home.jxdc')}}</div>
-      <div class="xiadan-btn-right" @click="payNow">{{$t('home.xzzf')}}</div>
+  </div> -->
+  <toast :text="$t('home.xdcg')" :show.sync="showMask" />
+  <div class="settlement" v-if="showXiaDan">
+    <div class="settlement-zd">
+      <div class="settlement-bg flex">
+        <div class="settlement-btn settlement-btn-left" @click="toHome()">{{$t("home.jxdc")}}</div>
+        <div class="settlement-btn" @click="payNow()">{{$t("home.xzzf")}}</div>
+      </div>
     </div>
+  </div>
 </div>
 </template>
 
@@ -70,16 +75,19 @@ export default {
     return {
       showMask: true,
       showXiaDan: true,
-      orderList: []
+      orderList: [],
     }
   },
-  mounted() {
+  created() {
     if(this.$route.query.source== 'pay') {
+      this.showMask = false;
       this.showXiaDan = false;
     }else if(this.$route.query.source== 'myorder') {
       this.showXiaDan = true;
       this.showMask = false;
     }
+  },
+  mounted() {
     this.getMyOrder()
   },
   methods: {
@@ -134,10 +142,34 @@ export default {
 
 <style scoped>
 .order-wrapper{
-  padding-bottom: .8rem;
+  padding-bottom: 1.4rem;
+  background: #fafafa;
+  overflow: hidden;
 }
 .details-item li{
   display: flex;
   justify-content: space-between;
+}
+.warper{
+  margin: .24rem;
+  width: calc(100vw - 0.48rem);
+  background: #fff;
+  border-radius: .16rem;
+  overflow: hidden;
+}
+.details-zh{
+  background: #fff;
+}
+.settlement-btn{
+  width: 50%;
+  height: 100%;
+  position: relative;
+  line-height: 1rem;
+  border-radius:0;
+  margin-top: 0;
+  right: 0;
+}
+.settlement-btn-left{
+  background: #333333;
 }
 </style>

@@ -1,29 +1,51 @@
 <template>
   <div class="warper">
-    <div class="orderstatus">
+    <div class="container">
       <div class="payment-number">
-        <!-- <p class="textCenter" style="font-size:.28rem;">韩国烤肉（中山公园店）</p> -->
+        <!-- <p class="textCenter" style="font-size:.28rem;"></p> -->
+        {{storeInfo.msName}}
       </div>
-      <div class="conts">
-        <!-- <p class="flex flex-vc flex-sc"><span>支付金额</span><span>129.11元</span></p>
-        <p class="flex flex-vc flex-sc"><span>下单时间</span><span>2021-01-14 15:49:24</span></p>
-        <p class="flex flex-vc flex-sc"><span>订单号</span><span>7542605045661696</span></p>
-        <p class="flex flex-vc flex-sc"><span>状态</span><span>已支付</span></p> -->
-        <p class="flex flex-vc flex-sc"><span>{{$t('home.zfje')}}</span><span>{{statusData.realAmount}}{{$t('home.yuan')}}</span></p>
-        <p class="flex flex-vc flex-sc"><span>{{$t('home.zje')}}</span><span>{{statusData.orderAmount}}{{$t('home.yuan')}}</span></p>
-        <p class="flex flex-vc flex-sc"><span>{{$t('home.xdsj')}}</span><span>{{statusData.tradeTime}}</span></p>
-        <p class="flex flex-vc flex-sc"><span>{{$t('home.ddh')}}</span><span>{{statusData.orderNo}}</span></p>
-        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'success'"><span>{{$t('home.zhuangtai')}}</span><span>{{$t('home.fkcg')}}</span></p>
-        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'fail'"><span>{{$t('home.zhuangtai')}}</span><span>{{$t('home.fksb')}}</span></p>
-        <p class="flex flex-vc flex-sc" v-if="statusData.status == 'processing'"><span>{{$t('home.zhuangtai')}}</span><span>{{$t('home.jxz')}}</span></p>
+      <div class="payment-number-content">
+          <ul>
+            <li class="flex flex-vc flex-sc">
+              <p>{{$t('home.ddh')}}</p>
+              <p>$ {{statusData.orderNo}}</p>
+            </li>
+            <li class="flex flex-vc flex-sc">
+              <p>{{$t('home.zfje')}}</p>
+              <p>$ {{statusData.realAmount}}</p>
+            </li>
+            <li class="flex flex-vc flex-sc">
+              <p>{{$t('home.zje')}}</p>
+              <p>$ {{statusData.orderAmount}}</p>
+            </li>
+            <li class="flex flex-vc flex-sc">
+              <p>{{$t('home.xdsj')}}</p>
+              <p>$ {{statusData.tradeTime}}</p>
+            </li>
+            <li class="flex flex-vc flex-sc">
+              <p>{{$t('home.zhuangtai')}}</p>
+              <p v-if="statusData.status == 'success'">{{$t('home.fkcg')}}</p>
+              <p v-if="statusData.status == 'fail'">{{$t('home.fksb')}}</p>
+              <p v-if="statusData.status == 'processing'">{{$t('home.jxz')}}</p>
+            </li>
+            
+          </ul>
+        </div>
+    </div>
+    <div class="settlement">
+      <div class="settlement-zd">
+        <div class="settlement-bg flex">
+          <div class="settlement-btn settlement-btn-left" @click="goHome()">{{$t("home.jxdc")}}</div>
+        </div>
       </div>
     </div>
-    <div class="payBtn textCenter" @click="goHome">{{$t('home.jxdc')}}</div>
   </div>
 </template>
 
 <script>
 import { get } from '@/net/http'
+import { mapGetters } from 'vuex'
 import api from '@/net/api'
 export default {
   name: 'pay',
@@ -32,6 +54,9 @@ export default {
       showCart: false,
       statusData:{}
     }
+  },
+  computed: {
+    ...mapGetters(['storeInfo'])
   },
    mounted() {
     const { orderNo } = this.$route.query
@@ -71,5 +96,28 @@ export default {
     color: rgba(0, 0, 0, 1);
     font-size: .28rem;
     padding: 0 .46rem 0 .38rem;
+}
+.warper{
+  background: #FAFAFA;
+  overflow: hidden;
+  min-height: 100vh;
+}
+.settlement-btn{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  line-height: 1rem;
+  border-radius:0;
+  margin-top: 0;
+  right: 0;
+}
+.payment-number-content{
+  border-bottom: 0;
+}
+.payment-number {
+  font-size: .3rem;
+  font-weight: 500;
+  color: #999999;
+  line-height: .37rem;
 }
 </style>

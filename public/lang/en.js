@@ -81,5 +81,7 @@ const en = {
         "bxxz": "Must Choose", //必须选择
         "zxjcrs":"Number Of Diners", //请选择就餐人数
         "zccg":"Resgister Complete , Open login page in 3 secounds", //注册成功
+        "fanhui": "Back", // 返回
+        "qkgwcm": "清空购物车吗?", // 清空购物车吗
    }
 }

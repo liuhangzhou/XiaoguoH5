@@ -6,9 +6,10 @@ import './assets/js/rem.js'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueI18n from 'vue-i18n'
-import './assets/css/index.css' 
 import alert from '@/components/alert'
+import toast from '@/components/toast/toast.vue'
 Vue.component('alert',alert)
+Vue.component('toast',toast)
 
 Vue.use(VueI18n)
 Vue.use(VueAxios, axios)

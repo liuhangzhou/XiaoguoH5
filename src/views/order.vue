@@ -17,38 +17,50 @@
               <div class="details-text-p2" v-else>
                 <span v-for="attr in item.attributes" :key="attr.id">
                   <span v-for="(attrs,index) in attr.optionList" :key="index">
-                    <span v-if="attrs">{{attrs.optionName}};</span>
+                    <span v-if="attrs">{{attrs.optionName}}<span v-if="index < attr.optionList.length-2">/</span></span>
                   </span>
                 </span>
               </div>
+              <div class="details-text-p2">x <span>{{ item.count }}</span></div>
             </div>
           </div>
           <div>
             <div class="details-monery">{{ item.activePrice }}</div>
-            <div class="details-number">x <span>{{ item.count }}</span></div>
           </div>
         </li>
         
       </ul>
-      <div class="details-youhui flex flex-sc flex-vc" v-if="couponIndex !== -1">
+      <div class="details-youhui flex flex-sc flex-vc">
         <div class="details-youhui-text flex flex-vc">
           <img
           class="favourable-icon"
           src="../assets/img/ic_coupons.png"
           alt=""
-        />
-        {{$t('home.mjyh')}}</div>
-        <div class="details-youhui-monery">-{{storeCoupons[couponIndex].reduceCost}}</div>
+          >
+          {{$t('home.mjyh')}}
+        </div>
+        <div class="details-youhui-monery">
+          -<span v-if="couponIndex !== -1">{{storeCoupons[couponIndex].reduceCost}}</span><span v-else>0</span>
+        </div>
       </div>
       <div class="total flex flex-sc flex-vc">
         <div class="total-text">{{$t('home.heji')}}</div>
-        <div class="total-monery">{{ this.realAmount  }}</div>
+        <div class="total-monery">{{ this.realAmount  }}
+        </div>
       </div>
     </div>
-    <div class="xiadan-footer flex flex-vc flex-hc">
+    <div class="settlement">
+      <div class="settlement-zd">
+        <div class="settlement-bg flex">
+          <div class="settlement-btn settlement-btn-left" @click="toHome()">{{$t("home.wzxx")}}</div>
+          <div class="settlement-btn" @click="confirmOrder()">{{$t("home.qrxd")}}</div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="xiadan-footer flex flex-vc flex-hc">
       <div class="wait-btn" @click="toHome">{{$t('home.wzxx')}}</div>
       <div class="order-btn" @click="confirmOrder">{{$t('home.qrxd')}}</div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -74,7 +86,7 @@ export default {
       for (let i = 0; i < this.cartProduct.length; i++) {
           price += Number(this.cartProduct[i].activePrice) * this.cartProduct[i].count;
       }
-      this.realAmount =  this.totalPrice = Math.round(price * 100) / 100;
+      this.realAmount =  (this.totalPrice = Math.round(price * 100) / 100).toFixed(2);
       console.log(this.totalPrice,"this.totalPrice")
       for(let i=0;i< this.storeCoupons.length;i++){
         if(this.storeCoupons[i].leastCost < this.totalPrice) {
@@ -83,6 +95,7 @@ export default {
       }
       if(this.couponIndex !== -1) {
         this.realAmount -= this.storeCoupons[this.couponIndex].reduceCost
+        this.realAmount = this.realAmount.toFixed(2)
         // this.discount = 
         // this.$t('home.yijian') + this.storeCoupons[couponIndex].reduceCost + 
         // this.$t('home.zaimai') + (this.storeCoupons[couponIndex+1].leastCost-this.totalPrice) + 
@@ -166,7 +179,21 @@ function sortNumber(a,b){//升序
 .details-item li{
   display: flex;
   justify-content: space-between;
-  padding-right: .44rem;
-  
+}
+.settlement-btn{
+  width: 50%;
+  height: 100%;
+  position: relative;
+  line-height: 1rem;
+  border-radius:0;
+  margin-top: 0;
+  right: 0;
+}
+.settlement-btn-left{
+  background: #333333;
+}
+.favourable-icon{
+  width: .32rem;
+  height: .32rem  ;
 }
 </style>

@@ -39,5 +39,18 @@ export default {
 </script>
 
 <style scoped>
+.food-swiper {
+  width: 100%;
+}
 
+.swiper-container {
+  width: 100%;
+}
+.food-info {
+  font-size: .36rem;
+  line-height: .42rem;
+  padding: .4rem .25rem 0;
+  font-weight: 600;
+  color: #111111;
+}
 </style>

@@ -21,6 +21,7 @@
             <div class="goods-text">
               <p class="goods-name">{{ product.productName }}</p>
               <p class="goods-remarks">{{ product.remark }}</p>
+              <p class="goods-remarks">月售100</p>
               <p class="goods-monery">{{ product.activePrice }}</p>
             </div>
             <div
@@ -186,4 +187,168 @@ export default {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+
+.menu-right {
+  float: right;
+  width: 75%;
+  height: 100%;
+}
+
+.menu-right-content {
+  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 2.1rem;
+}
+
+.goods-img {
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: .16rem;
+  overflow: hidden;
+  font-size: 0;
+}
+
+.goods-name {
+  font-size: .3rem;
+  color: #000;
+  line-height: .4rem;
+  margin-top: .08rem;
+  font-weight: 500;
+  overflow:hidden; 
+  text-overflow:ellipsis;
+  display:-webkit-box; 
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:1; 
+}
+
+.goods-remarks {
+  font-size: .24rem;
+  color: #666;
+  line-height: .34rem;
+  overflow:hidden; 
+  text-overflow:ellipsis;
+  display:-webkit-box; 
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:1; 
+}
+
+.goods-monery {
+  font-size: .28rem;
+  color: rgba(242, 57, 22, 100);
+  line-height: .4rem;
+  font-weight: 700;
+}
+
+.goods-text {
+  margin-left: .24rem;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between;
+  width: 3.6rem;
+}
+
+.menu-panel {
+  margin-top: .28rem;
+}
+
+.menu-right .menu-panel:first-child {
+  margin-top: 0;
+}
+
+.menu-panel-content li {
+  position: relative;
+  padding:.13rem  0 ;
+  padding-left: .2rem;
+}
+
+.goods-num{
+  width: .4rem;
+  height: .44rem;
+  overflow: hidden;
+  position: absolute;
+  text-align: center;
+  right: 0.7rem;
+  line-height: .44rem;
+  font-size: .4rem;
+  bottom: .2rem;
+}
+.minus-goods {
+  width: .44rem;
+  height: .44rem;
+  background: #F28512;
+  border-radius: .25rem;
+  overflow: hidden;
+  position: absolute;
+  bottom: .2rem;
+  right: 1.1rem;
+}
+.minus-goods:before {
+  content: "";
+  width: .3rem;
+  height: .04rem;
+  background: #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+.add-goods {
+  width: .44rem;
+  height: .44rem;
+  background: #F28512;
+  border-radius: .25rem;
+  overflow: hidden;
+  position: absolute;
+  bottom: .2rem;
+  right: .26rem;
+}
+
+.add-goods:before {
+  content: "";
+  width: .04rem;
+  height: .3rem;
+  background: #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+
+.add-goods:after {
+  content: "";
+  width: .3rem;
+  height: .04rem;
+  background: #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+.menu-tit {
+  font-size: .28rem;
+  min-height: 1rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  padding:0 .2rem;
+  font-weight: 500;
+}
+
+</style>
