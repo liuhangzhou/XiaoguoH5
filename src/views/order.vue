@@ -2,7 +2,7 @@
 <!-- 订单详情 -->
   <div class="warper">
     <div class="details-box">
-      <div class="details-zh">{{$t('home.zhuohao')}}：<span>N01</span></div>
+      <div class="details-zh">{{$t('home.zhuohao')}}：<span>{{tableNo}}</span></div>
       <ul class="details-item">
         <li class="flex" v-for="(item,index) in cartProduct" :key="index">
           <div class="flex">
@@ -75,7 +75,8 @@ export default {
       totalPrice:'',
       realAmount:'',
       list:[],
-      couponIndex: -1
+      couponIndex: -1,
+      tableNo: sessionStorage.getItem('tableNo')
     };
   },
   computed: {
