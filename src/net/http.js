@@ -20,8 +20,8 @@ service.interceptors.request.use(
   config => {
     var lang = navigator.language === 'en' ? 'us' : 'cn'
     let token = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')).token:'';
-    let msCode = sessionStorage.getItem('msCode')
-    let tableNo = sessionStorage.getItem('tableNo')
+    let msCode = sessionStorage.getItem('msCode') ? sessionStorage.getItem('msCode') : '10001';
+    let tableNo = sessionStorage.getItem('tableNo') ? sessionStorage.getItem('tableNo') : '10';
     if(config.data) {
       config.data.lang = lang
       config.data.token = token

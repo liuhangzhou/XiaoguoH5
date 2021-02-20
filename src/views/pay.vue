@@ -95,7 +95,6 @@ export default {
   created() {
     if(this.$route.query.tradeIds) {
       this.payNow(this.$route.query.tradeIds);
-      console.log(this.$route.query.tradeIds)
     }else{
       this.confirmData = JSON.parse(sessionStorage.getItem('confirmData'));
     }

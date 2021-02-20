@@ -95,7 +95,6 @@ export default {
       let data = {
           msCode: '10001',// 公共参数
           tableNo: '10',
-//           token: '',
           lang: 'cn',
           status: 'waiting_pay'
       }
