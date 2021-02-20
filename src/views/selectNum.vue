@@ -18,7 +18,6 @@ export default {
     created() {
         let msCode = this.$route.query.msCode ? this.$route.query.msCode : '10001';
         let tableNo = this.$route.query.tableNo ? this.$route.query.tableNo : '10';
-        console.log(msCode,tableNo)
         sessionStorage.setItem('msCode',msCode)
         sessionStorage.setItem('tableNo',tableNo)
     },

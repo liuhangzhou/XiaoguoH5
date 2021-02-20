@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { post } from "@/net/http"
+import { get, post } from '@/net/http'
 import api from "@/net/api"
 export default {
   name: 'pay',
@@ -93,12 +93,30 @@ export default {
     }
   },
   created() {
-    this.confirmData = JSON.parse(sessionStorage.getItem('confirmData'));
+    if(this.$route.query.tradeIds) {
+      this.payNow(this.$route.query.tradeIds);
+      console.log(this.$route.query.tradeIds)
+    }else{
+      this.confirmData = JSON.parse(sessionStorage.getItem('confirmData'));
+    }
   },
   mounted() {
     // const params = [] //tradeIds订单号，多个以英文逗号隔开
   },
   methods: {
+    payNow(tradeIds) {
+      let params = {
+        msCode: '10001',// 公共参数
+        tableNo: '10',
+        lang: 'cn',
+        tradeIds
+      }
+      get(api.queryConfirm, params).then(res=> {
+        res.count = tradeIds.split(',').length;
+        res.tradeIds = params.tradeIds;
+        this.confirmData = res;
+      })
+    },
     async queryPay(params) {
       try {
         const data = await post(api.queryPay, params)
