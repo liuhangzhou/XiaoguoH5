@@ -46,7 +46,7 @@
           </ul>
         </div>
       </div>
-      <div class="settlement-tips">
+      <div class="settlement-tips" v-if="discount">
         {{ this.discount }}
       </div>
       <div class="settlement-zd">
@@ -286,6 +286,9 @@ export default {
   position: relative;
   margin-top: .11rem;
   margin-left: 0.11rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .cart_icon {
   width: .76rem;

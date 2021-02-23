@@ -22,9 +22,10 @@
           <div class="my-order" @click="goMyOrder">
             <img
               class="order-icon"
-              src="../../assets/img/订单.png"
+              src="../../assets/img/order2.png"
               alt=""
             />
+            {{$t("home.wodedingdan")}}
           </div>
         </div>
       </div>
@@ -94,7 +95,7 @@ export default {
 <style scoped>
 .header-bg{
   width: 100%;
-  height: 4.5rem;
+  height: 3.26rem;
 }
 .header-bg img{
   width: 100%;
@@ -103,7 +104,7 @@ export default {
 .position{
   position: absolute;
   padding: 0 .24rem;
-  top: 1.7rem;
+  top: 1rem;
   width: 100%;
 }
 .position-wrapper{
@@ -143,6 +144,7 @@ export default {
 .favourable{
   margin-top: .16rem;
   flex-wrap: wrap;
+  position: relative;
 }
 .favourable li{
   line-height: .3rem;
@@ -157,9 +159,16 @@ export default {
 }
 .my-order{
   position: absolute;
-  right: .24rem;
+  right: 0;
+  display: flex;
+  align-items: center;
+  font-size: .24rem;
+  color: #333;
+  font-weight: 400;
+  font-family: PingFangSC-Regular, PingFang SC;
 }
 .my-order img{
-  width: .7rem
+  width: .5rem;
+  display: block;
 }
 </style>

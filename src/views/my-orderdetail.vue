@@ -1,6 +1,10 @@
 <template>
 <!-- 待支付订单 -->
-<div class="order-wrapper">
+<div class="order-wrapper" v-if="orderList.length">
+  <div class="header" v-show="showMask">
+    {{$t('home.xdcg')}}
+    <p>{{$t('home.qdd')}}</p>
+  </div>
     <div class="warper" v-for="item in orderList" :key="item.tradeId">
     <!-- <div class="details-box "> -->
       <div class="details-zh flexBetween padding10 navBg">
@@ -53,7 +57,6 @@
         <div class="dailog-btn" @click="clearMask">{{$t('home.queding')}}</div>
       </div>
   </div> -->
-  <toast :text="$t('home.xdcg')" :show.sync="showMask" />
   <div class="settlement" v-if="showXiaDan">
     <div class="settlement-zd">
       <div class="settlement-bg flex">
@@ -61,6 +64,12 @@
         <div class="settlement-btn" @click="payNow()">{{$t("home.xzzf")}}</div>
       </div>
     </div>
+  </div>
+</div>
+<div class="empty" v-else>
+  <div class="empty-content">
+    <img src="../assets/img/ic_zwdd.png" alt="">
+    <p>{{$t("home.zwdd")}}</p>
   </div>
 </div>
 </template>
@@ -144,6 +153,7 @@ export default {
   padding-bottom: 1.4rem;
   background: #fafafa;
   overflow: hidden;
+  min-height: 100vh;
 }
 .details-item li{
   display: flex;
@@ -170,5 +180,34 @@ export default {
 }
 .settlement-btn-left{
   background: #333333;
+}
+.header{
+  background: linear-gradient(136deg, #FFC242 0%, #FF8F1F 100%);
+  padding: .2rem .48rem;
+  font-size: .4rem;
+  font-weight: 500;
+  color: #000;
+}
+.header p{
+  font-size: .24rem;
+  font-weight: 400;
+}
+.empty{
+  height: 100vh;
+  background: #FAFAFA;
+  position: relative;
+}
+.empty-content{
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: .36rem;
+  font-weight: 400;
+  color: #666666;
+}
+.empty-content img{
+  width: 3rem;
 }
 </style>

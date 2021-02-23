@@ -135,6 +135,9 @@ export default {
       }
     },
     selectProduct(attribute, optionBean) {
+      if(optionBean.isDisabled) {
+        this.showAlert1(attribute.name,attribute.leastChoose)
+      }
       const { isSelected } = optionBean
       var count = 0
       var leastChoose = attribute.leastChoose
@@ -182,6 +185,10 @@ export default {
     showAlert(leastChoose){
       this.alertShow = true;
       this.alertText = this.$t('home.zsxz') + leastChoose + this.$t('home.xiang');
+    },
+    showAlert1(attr,number){
+      this.alertShow = true;
+      this.alertText = attr + this.$t('home.znxz') + number + this.$t('home.xiang');
     },
 
     addInCart() {
