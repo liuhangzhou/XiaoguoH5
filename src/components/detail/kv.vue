@@ -12,6 +12,7 @@
       </div>
     </div>
     <div class="food-info">{{ detailInformation.productName }}</div>
+    <div class="food-remark">{{ detailInformation.remark }}</div>
   </div>
 </template>
 
@@ -52,5 +53,11 @@ export default {
   padding: .4rem .25rem 0;
   font-weight: 600;
   color: #111111;
+}
+.food-remark{
+  padding: .1rem .25rem 0;
+  font-size: .26rem;
+  font-weight: 500;
+
 }
 </style>

@@ -82,9 +82,9 @@ const en = {
         "zxjcrs":"Number Of Diners", //请选择就餐人数
         "zccg":"Resgister Complete , Open login page in 3 secounds", //注册成功
         "fanhui": "Back", // 返回
-        "qkgwcm": "确定清空购物车吗?", // 清空购物车吗
-        'znxz': '只能选择',
-        "zwdd": "暂无订单",
-        "ksdc": "开始点餐",
+        "qkgwcm": "Sure To clear Cart？", // 清空购物   车吗
+        'znxz': 'Only can choose',
+        "zwdd": "You havent Order",
+        "ksdc": "Start Order",
    }
 }

@@ -59,7 +59,7 @@
             </div>
           </div>
           <div class="settlement-monery">
-            <p class="totalPrice">{{ this.totalPrice }}</p>
+            <span class="totalPrice">{{ this.totalPrice }}</span> <del>{{allPrice}}</del>
           </div>
           <div class="settlement-btn" @click="toOrder" :class="{isEmpty:this.cartTotal == 0 }" >{{$t("home.quxiadan")}}</div>
         </div>
@@ -82,6 +82,7 @@ export default {
       cartTotal: '',
       totalPrice: '',
       discount: null, //再买
+      allPrice: 0,
       coupon: {
       },
       
@@ -122,7 +123,9 @@ export default {
       for (let i = 0; i < this.cartProduct.length; i++) {
         num += Number(this.cartProduct[i].count)
         price += Number(this.cartProduct[i].activePrice) * this.cartProduct[i].count
+    
       }
+      this.allPrice = price.toFixed(2);
       this.totalPrice = (Math.round(price * 100) / 100).toFixed(2);
       let couponIndex = -1;
       if(this.storeCoupons.length !== 0) {
@@ -138,6 +141,7 @@ export default {
           this.$t('home.zaimai') + (this.storeCoupons[couponIndex+1].leastCost*100 - Math.round(this.totalPrice)*100)/100 + 
           this.$t('home.kejian') + this.storeCoupons[couponIndex+1].reduceCost + this.$t('home.kejianhou')
         }else if(couponIndex ==this.storeCoupons.length-1){
+          this.totalPrice = ((Math.round(this.totalPrice * 100) - Math.round(this.storeCoupons[couponIndex].reduceCost*100))/100).toFixed(2)
           this.discount = 
           this.$t('home.yijian') + this.storeCoupons[couponIndex].reduceCost 
         }else {
@@ -299,11 +303,20 @@ export default {
 .settlement-monery {
   margin-top:.04rem;
   padding-left: .36rem;
+  display: flex;
+}
+.settlement-monery del{
+  color: #fff;
+  font-size: .24rem;
+  display: flex;
+  align-items: center;
+  margin-left: .1rem;
+  margin-top: .08rem;
 }
 .totalPrice{
-  font-weight: 400;
+  font-weight: 600;
   color: #FFFFFF;
-  font-size: .28rem;
+  font-size: .4rem;
   line-height: .52rem;
   display: flex;
   align-items: center;

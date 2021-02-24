@@ -1,7 +1,7 @@
 <template>
 <!-- 订单详情 -->
   <div class="warper">
-    <div class="details-zh">{{$t('home.zhuohao')}}：<span>{{tableNo}}</span></div>
+    <div class="details-zh2">{{$t('home.zhuohao')}}：<span>{{tableNo}}</span></div>
     <div class="details-box">
       <ul class="details-item">
         <li class="flex" v-for="(item,index) in cartProduct" :key="index">

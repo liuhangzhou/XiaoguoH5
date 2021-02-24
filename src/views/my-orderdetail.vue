@@ -5,6 +5,9 @@
     {{$t('home.xdcg')}}
     <p>{{$t('home.qdd')}}</p>
   </div>
+  <div class="title-bar" v-show="!showMask" @click="goback">
+    <img src="../assets/img/ic_right-black.png" alt=""> {{$t('home.wodedingdan')}}
+  </div>
     <div class="warper" v-for="item in orderList" :key="item.tradeId">
     <!-- <div class="details-box "> -->
       <div class="details-zh flexBetween padding10 navBg">
@@ -122,6 +125,9 @@ export default {
     toHome() {
       this.$router.push('/home?refresh=true')
     },
+    goback(){
+      this.$router.go(-1)
+    },
     payNow() {
       let tradeIds = '';
       this.orderList.forEach(order=> {
@@ -191,6 +197,20 @@ export default {
 .header p{
   font-size: .24rem;
   font-weight: 400;
+}
+.title-bar{
+  background: linear-gradient(136deg, #FFC242 0%, #FF8F1F 100%);
+  padding: .25rem .48rem;
+  font-weight: 500;
+  font-size: .3rem;
+  color: #000;
+  display: flex;
+  align-items: center;
+}
+.title-bar img{
+  width: .22rem;
+  transform: rotate(-180deg);
+  margin-right: .2rem;
 }
 .empty{
   height: 100vh;

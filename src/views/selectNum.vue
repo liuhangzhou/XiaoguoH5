@@ -19,6 +19,9 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { get } from '@/net/http'
+import api from '@/net/api'
+
 export default {
     name: 'selectNum',
     data() {
@@ -32,6 +35,7 @@ export default {
         let tableNo = this.$route.query.tableNo ? this.$route.query.tableNo : '10';
         sessionStorage.setItem('msCode',msCode)
         sessionStorage.setItem('tableNo',tableNo)
+        this.getMyOrder()
     },
     computed: {
         ...mapGetters(['mealsNumber'])
@@ -40,6 +44,19 @@ export default {
         ...mapActions(['setMealsNumber']),
         handleClick(n) {
             this.selectNum = n;
+        },
+        getMyOrder(){
+            let data = {
+                  msCode: '10001',// 公共参数
+                  tableNo: '10',
+                  lang: 'cn',
+                  status: 'waiting_pay'
+              }
+            get(api.queryOrderList,data).then(res=> {
+                if(res.list.length > 0) {
+                    this.$router.push('/orderdetail?source=myorder')
+                }
+            })  
         },
         submit() {
             this.setMealsNumber(this.selectNum);
