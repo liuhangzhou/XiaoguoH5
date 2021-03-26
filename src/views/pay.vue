@@ -79,6 +79,8 @@
         </div>
       </div>
     </div>
+    <alert :show.sync="alertShow" :text="$t('home.fksb')" :comfirm="()=>{alertShow = false}" />
+    <alert :show.sync="showAlert" :text="$t('home.fkcg')" :comfirm="comfirm" />
   </div>
 </template>
 
@@ -87,12 +89,24 @@ import { get, post } from '@/net/http'
 import api from "@/net/api"
 export default {
   name: 'pay',
-  data: () => {
+  data(){
     return {
-      confirmData: {}
+      showAlert: false,
+      confirmData: {},
+      alertShow: false,
     }
   },
   created() {
+    if(this.$route.query.status == 11) {
+      this.alertShow  = true;
+    }
+    if(this.$route.query.status == 22) {
+      this.alertShow  = true;
+    }
+    if(this.$route.query.status == '00') {
+      this.showAlert  = true;
+    }
+
     if(this.$route.query.tradeIds) {
       this.payNow(this.$route.query.tradeIds);
     }else{
@@ -103,6 +117,9 @@ export default {
     // const params = [] //tradeIds订单号，多个以英文逗号隔开
   },
   methods: {
+    comfirm() {
+      this.$router.push('/')
+    },
     payNow(tradeIds) {
       let params = {
         msCode: '10001',// 公共参数
@@ -120,7 +137,7 @@ export default {
       try {
         const data = await post(api.queryPay, params)
         window.location.href = data.payinfo;
-        this.$router.push('/orderStatus?orderNo='+data.orderNo)
+        // this.$router.push('/orderStatus?orderNo='+data.orderNo)
       } catch (e) {
         console.log('e', e)
       }
@@ -135,8 +152,8 @@ export default {
         couponId:'',//	否 使用的优惠券id
         realAmount:this.confirmData.realAmount,//是 	用券后的实付金额
         payType:'bank',//是 bank网银支付；wechat微信支付（暂不支持）
-        returnUrl	:'http://xxx.com/xxx',// 否	同步回调地址
-        cancelUrl:'http://xxx.com/xxx',//否 取消地址
+        returnUrl	:'http://h5.menupls.ixiaoguo.com.cn/#/orderStatus',// 否	同步回调地址
+        cancelUrl:'http://h5.menupls.ixiaoguo.com.cn/#/pay',//否 取消地址
       }
       this.queryPay(params)
     },

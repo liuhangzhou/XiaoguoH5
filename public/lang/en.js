@@ -86,5 +86,6 @@ const en = {
         'znxz': 'Only can choose',
         "zwdd": "You havent Order",
         "ksdc": "Start Order",
+        "spsw": "The product has insufficient quantity" // 商品售完
    }
 }

@@ -67,8 +67,8 @@ export default {
         couponId:'',//	否 使用的优惠券id
         realAmount:this.tradeData.realAmount,//是 	用券后的实付金额
         payType:'bank',//是 bank网银支付；wechat微信支付（暂不支持）
-        returnUrl	:'http://xxx.com/xxx',// 否	同步回调地址
-        cancelUrl:'http://xxx.com/xxx',//否 取消地址
+        returnUrl	:'http://h5.menupls.ixiaoguo.com.cn/#/orderStatus',// 否	同步回调地址
+        cancelUrl:'http://h5.menupls.ixiaoguo.com.cn/#/payment',//否 取消地址
 
       }
       this.queryPay(params)

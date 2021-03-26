@@ -80,7 +80,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["cartProduct", "categoryList", "storeCoupons"]),
+    ...mapGetters(["cartProduct", "categoryList", "storeCoupons", 'mealsNumber']),
   },
   mounted() {
       let price = 0;
@@ -97,10 +97,6 @@ export default {
       if(this.couponIndex !== -1) {
         this.realAmount -= this.storeCoupons[this.couponIndex].reduceCost
         this.realAmount = this.realAmount.toFixed(2)
-        // this.discount = 
-        // this.$t('home.yijian') + this.storeCoupons[couponIndex].reduceCost + 
-        // this.$t('home.zaimai') + (this.storeCoupons[couponIndex+1].leastCost-this.totalPrice) + 
-        // this.$t('home.kejian') + this.storeCoupons[couponIndex+1].reduceCost + this.$t('home.kejianhou')
       }
 
 
@@ -161,7 +157,7 @@ export default {
           tableNo: '10',
 //           token: '',
           lang: 'cn',
-          selectedPeopleNum:'2',//  就餐人数
+          selectedPeopleNum:this.mealsNumber,//  就餐人数
           totalAmount:this.totalPrice,//总价
           realAmount:this.realAmount,//总价满减后价格
           productList:JSON.stringify(cartProductArr),//商品json

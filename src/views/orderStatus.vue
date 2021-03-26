@@ -9,7 +9,7 @@
           <ul>
             <li class="flex flex-vc flex-sc">
               <p>{{$t('home.ddh')}}</p>
-              <p>$ {{statusData.orderNo}}</p>
+              <p>{{statusData.orderNo}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
               <p>{{$t('home.zfje')}}</p>
@@ -21,7 +21,7 @@
             </li>
             <li class="flex flex-vc flex-sc">
               <p>{{$t('home.xdsj')}}</p>
-              <p>$ {{statusData.tradeTime}}</p>
+              <p>{{statusData.tradeTime}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
               <p>{{$t('home.zhuangtai')}}</p>

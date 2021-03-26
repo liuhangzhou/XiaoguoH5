@@ -37,6 +37,7 @@
         </ul>
       </div>
     </div>
+    <toast v-if="alertShow" :show.sync="alertShow" :text="$t('home.spsw')" />
   </div>
 </template>
 
@@ -51,6 +52,7 @@ export default {
       newCart: [],
       category: [],
       isScroll: false,
+      alertShow: false,
     }
   },
   computed: {
@@ -92,8 +94,6 @@ export default {
     },
     listenerScroll() {
         for(let n=0;n<this.list.length;n++) {
-          // this.$refs.list.scrollTop 必须 大于等于当前panel距离顶部的高度
-          // this.$refs.list.scrollTop 必须 小于后一个panel距离顶部的高度
           if(
             this.$refs.panel[n].offsetTop - this.$refs.panel[0].offsetTop <= this.$refs.list.scrollTop 
             && this.$refs.panel[n+1].offsetTop - this.$refs.panel[0].offsetTop > this.$refs.list.scrollTop
@@ -116,6 +116,10 @@ export default {
       return categoryId;
     },
     addInCart(item, product) {
+      if(product.stock < 1) {
+        this.alertShow = true;
+        return false;
+      }
       if (product.haveAttribute === '1') {
         this.$router.push({
           path: '/detail',

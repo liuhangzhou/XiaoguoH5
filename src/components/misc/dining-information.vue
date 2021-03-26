@@ -16,9 +16,12 @@
           </div>
         </div>
         <div class="favourable flex flex-vc" >
-          <li v-for="coupons in storeCoupons" :key="coupons.id">
-            {{ coupons.leastCost }}{{$t("home.jian")}}{{ coupons.reduceCost }}
-          </li>
+          <div class="favourable-wrapper flex flex-vc">
+            <li v-for="coupons in storeCoupons" :key="coupons.id">
+              {{ coupons.leastCost }}{{$t("home.jian")}}{{ coupons.reduceCost }}
+            </li>
+          </div>
+
           <div class="my-order" @click="goMyOrder">
             <img
               class="order-icon"
@@ -95,17 +98,16 @@ export default {
 <style scoped>
 .header-bg{
   width: 100%;
-  height: 3.26rem;
 }
 .header-bg img{
   width: 100%;
   height: 2.6rem;
 }
 .position{
-  position: absolute;
-  padding: 0 .24rem;
-  top: 1rem;
+  padding: 0 .24rem .2rem;
   width: 100%;
+  position: relative;
+  z-index: 99;
 }
 .position-wrapper{
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.04);
@@ -113,6 +115,7 @@ export default {
   width: 100%;
   padding: .24rem .24rem .24rem .32rem;
   background: #fff;
+  margin-top: -1.8rem;
 }
 .barbecue-name{
   font-size: .36rem;
@@ -170,5 +173,9 @@ export default {
 .my-order img{
   width: .5rem;
   display: block;
+}
+.favourable-wrapper{
+  width: 5rem;
+  flex-wrap: wrap;
 }
 </style>
