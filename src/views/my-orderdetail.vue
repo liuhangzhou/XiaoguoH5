@@ -28,7 +28,7 @@
               <div class="details-text-p2" v-else>
                 <span v-for="attr in product.attribute" :key="attr.id">
                     <span v-for="(attrs,index) in attr.optionList" :key="index">
-                      <span v-if="attrs">{{attrs.optionName}}<span v-if="index < attr.optionList.length-2">/</span></span>
+                      <span v-if="attrs">{{attrs.optionName}};</span>
                     </span>  
                 </span> 
               </div>

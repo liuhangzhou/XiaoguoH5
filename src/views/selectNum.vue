@@ -32,8 +32,10 @@ export default {
     },
     created() {
         let msCode = this.$route.query.msCode ? this.$route.query.msCode : '10001';
+        let mctCode = this.$route.query.mctCode ? this.$route.query.mctCode : '10000';
         let tableNo = this.$route.query.tableNo ? this.$route.query.tableNo : '10';
         sessionStorage.setItem('msCode',msCode)
+        sessionStorage.setItem('mctCode',mctCode)
         sessionStorage.setItem('tableNo',tableNo)
         this.getMyOrder()
     },

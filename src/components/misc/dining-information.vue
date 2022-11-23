@@ -21,15 +21,6 @@
               {{ coupons.leastCost }}{{$t("home.jian")}}{{ coupons.reduceCost }}
             </li>
           </div>
-
-          <div class="my-order" @click="goMyOrder">
-            <img
-              class="order-icon"
-              src="../../assets/img/order2.png"
-              alt=""
-            />
-            {{$t("home.wodedingdan")}}
-          </div>
         </div>
       </div>
     </div>
@@ -88,9 +79,6 @@ export default {
     aa() {
       this.$router.push('/login')
     },
-    goMyOrder() {
-      this.$router.push('/orderdetail?source=myorder')
-    }
   }
 }
 </script>

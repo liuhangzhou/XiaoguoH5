@@ -2,7 +2,6 @@ import axios from 'axios'
 import qs from 'qs'
 import { mapGetters } from 'vuex'
 
-console.log(window)
 
 const BASE_URL = 'http://47.116.128.207:8081/wechat'
 // const BASE_URL = '/wechat'
