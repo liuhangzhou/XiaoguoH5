@@ -13,7 +13,7 @@ const en = {
         "kejian": "RM ", //可减10元
         "kejianhou": " Off Available", // n元
         "jiarugouwuche": "Add to cart", // 加入购物车
-        "fhsy": "Back to home page", // 返回首页
+        "fhsy": "Back", // 返回首页
         "denglu": "Login", // 登录
         "zhuce": "Register", // 注册
         "shouji": "Phone Number", // 手机

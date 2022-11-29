@@ -50,7 +50,7 @@
                 <img src="../assets/img/ic_coupons.png" alt="">
                 {{$t('home.yhq')}}
               </p>
-              <p class="font-red" style="color:#333" v-if="!userToken" @click="goToLogin">{{$t('dianjidenglu')}}</p>
+              <p class="font-red" style="color:red" v-if="!userToken" @click="goToLogin">{{$t('dianjidenglu')}}</p>
               <div v-else-if="chosenCoupon != -1" class="font-red" style="color:#333" @click="couponPopup = true">-{{$t('$')}}  {{couponList[chosenCoupon].buyPrice}}</div>
               <p class="font-red" style="color:#333" v-else @click="couponPopup = true">{{couponList.length}}{{$t('zhangkeyong')}}</p>
             </li>

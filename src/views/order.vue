@@ -90,7 +90,7 @@ export default {
       this.realAmount =  (this.totalPrice = Math.round(price * 100) / 100).toFixed(2);
       console.log(this.totalPrice,"this.totalPrice")
       for(let i=0;i< this.storeCoupons.length;i++){
-        if(this.storeCoupons[i].leastCost < this.totalPrice) {
+        if(this.storeCoupons[i].leastCost <= this.totalPrice) {
           this.couponIndex = i;
         }
       }

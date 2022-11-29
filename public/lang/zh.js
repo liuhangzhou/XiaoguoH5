@@ -2,7 +2,7 @@
  * @Author: 江辉 jianghui@yit.com
  * @Date: 2021-03-19 16:32:04
  * @LastEditors: 江辉 jianghui@yit.com
- * @LastEditTime: 2022-11-29 23:21:38
+ * @LastEditTime: 2022-11-30 01:11:48
  * @FilePath: /XiaoguoH5/public/lang/zh.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -21,7 +21,7 @@ const zh = {
       "kejian": "可减", //可减10元
       "kejianhou": "元", 
       "jiarugouwuche": "加入购物车", // 加入购物车
-      "fhsy": "返回首页", // 返回首页
+      "fhsy": "返回", // 返回首页
       "denglu": "登录", // 登录
       "zhuce": "注册", // 注册
       "shouji": "手机", // 手机

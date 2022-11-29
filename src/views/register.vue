@@ -29,7 +29,7 @@
       <span style="color:#000;">{{$t('home.yshy')}}？</span>
       <span class="radius10" @click="gologin">{{$t('home.qudenglu')}}</span>
     </div>
-    <alert :show.sync="alertShow" :text="alertText" />
+    <alert :show.sync="alertShow" :text="alertText" :comfirm="changeAlertShow"/>
   
   </div>
 </template>
@@ -68,6 +68,9 @@ export default {
   mounted() {
   },
   methods: {
+    changeAlertShow() {
+      this.alertShow = false;
+    },
      async querySendValidateCode(params) {
       try {
         const data = await post(api.querySendValidateCode, params)

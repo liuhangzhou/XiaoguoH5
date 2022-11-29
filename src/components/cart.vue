@@ -130,7 +130,7 @@ export default {
       let couponIndex = -1;
       if(this.storeCoupons.length !== 0) {
         for(let i=0;i< this.storeCoupons.length;i++){
-          if(this.storeCoupons[i].leastCost < this.totalPrice) {
+          if(this.storeCoupons[i].leastCost <= this.totalPrice) {
             couponIndex = i;
           }
         }
@@ -141,6 +141,7 @@ export default {
           this.$t('home.zaimai') + (this.storeCoupons[couponIndex+1].leastCost*100 - Math.round(this.totalPrice)*100)/100 + 
           this.$t('home.kejian') + this.storeCoupons[couponIndex+1].reduceCost + this.$t('home.kejianhou')
         }else if(couponIndex ==this.storeCoupons.length-1){
+          console.log(couponIndex,this.storeCoupons)
           this.totalPrice = ((Math.round(this.totalPrice * 100) - Math.round(this.storeCoupons[couponIndex].reduceCost*100))/100).toFixed(2)
           this.discount = 
           this.$t('home.yijian') + this.storeCoupons[couponIndex].reduceCost 
