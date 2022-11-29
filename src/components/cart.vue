@@ -35,7 +35,7 @@
                     </span>  
                   </span> 
                 </p>
-                <p class="select-monery">{{ item.activePrice }}</p>
+                <p class="select-monery">{{$t('$')}}{{ item.activePrice }}</p>
               </div>
               <div class="add-remove flex flex-sc flex-vc">
                 <span class="add-btn" @click="remove(item)"></span>

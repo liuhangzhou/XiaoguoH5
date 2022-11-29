@@ -25,7 +25,7 @@
             </div>
           </div>
           <div>
-            <div class="details-monery">{{ item.activePrice }}</div>
+            <div class="details-monery">{{$t('$')}}{{ (item.activePrice * item.count).toFixed(2) }}</div>
           </div>
         </li>
         

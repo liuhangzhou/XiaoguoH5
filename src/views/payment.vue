@@ -1,9 +1,17 @@
+<!--
+ * @Author: 江辉 jianghui@yit.com
+ * @Date: 2021-03-02 13:14:38
+ * @LastEditors: 江辉 jianghui@yit.com
+ * @LastEditTime: 2022-11-29 23:26:40
+ * @FilePath: /XiaoguoH5/src/views/payment.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div class="warper">
     <div class="payment-main">
       <div class="payment-number">
         <!-- <p class="textCenter" style="font-size:.24rem;">韩国烤肉（中山公园店）</p> -->
-        <p  class="textCenter textH4 colorRed">${{tradeData.realAmount}}</p>
+        <p  class="textCenter textH4 colorRed">{{$t('$')}}{{tradeData.realAmount}}</p>
       </div>
       <!-- <div class="youhuiquan flex flex-vc flex-sc">
         <p>优惠券</p>

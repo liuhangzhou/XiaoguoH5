@@ -196,4 +196,5 @@ const en = {
    'wode': 'My',
    'Immediately' : 'Immediately',
    'discount': 'discount',
+   '$': '$',
 }

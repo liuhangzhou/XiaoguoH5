@@ -28,7 +28,7 @@
       <div class="settlement">
         <div class="settlement-zd">
           <div class="settlement-bg flex">
-            <div class="settlement-monery">$ {{ amount }}</div>
+            <div class="settlement-monery">{{$t('$')}} {{ amount }}</div>
             <div class="settlement-btn" @click="addInCart()">{{$t("home.jiarugouwuche")}}</div>
           </div>
         </div>

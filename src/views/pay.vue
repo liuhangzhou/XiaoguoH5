@@ -25,25 +25,25 @@
           <ul>
             <li class="flex flex-vc flex-sc">
               <p>{{$t('home.xiaoji')}}</p>
-              <p>$ {{confirmData.totalAmount}}</p>
+              <p>{{$t('$')}} {{confirmData.totalAmount}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
               <p>{{$t('home.xiaofei')}}</p>
-              <p>$ {{confirmData.tipAmount}}</p>
+              <p>{{$t('$')}} {{confirmData.tipAmount}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
               <p>
                 <span class="origin">税</span>
                 {{$t('home.xfs')}}
               </p>
-              <p>$ {{confirmData.exciseAmount}}</p>
+              <p>{{$t('$')}} {{confirmData.exciseAmount}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
               <p>
                 <span>{{$t('home.jian')}}</span>
                 {{$t('home.mjyh')}}
               </p>
-              <p class="font-red">-$ {{confirmData.redbagReduceAmount}}</p>
+              <p class="font-red">-{{$t('$')}} {{confirmData.redbagReduceAmount}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
               <p>
@@ -51,18 +51,18 @@
                 {{$t('home.yhq')}}
               </p>
               <p class="font-red" style="color:#333" v-if="!userToken" @click="goToLogin">{{$t('dianjidenglu')}}</p>
-              <div v-else-if="chosenCoupon != -1" class="font-red" style="color:#333" @click="couponPopup = true">-{{$t('home.$')}}  {{couponList[chosenCoupon].buyPrice}}</div>
+              <div v-else-if="chosenCoupon != -1" class="font-red" style="color:#333" @click="couponPopup = true">-{{$t('$')}}  {{couponList[chosenCoupon].buyPrice}}</div>
               <p class="font-red" style="color:#333" v-else @click="couponPopup = true">{{couponList.length}}{{$t('zhangkeyong')}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
               <p>{{$t('home.heji')}}</p>
-              <p>$ {{confirmData.realAmount}}</p>
+              <p>{{$t('$')}} {{confirmData.realAmount}}</p>
             </li>
           </ul>
         </div>
       </div>
       <div class="payment-monery">
-        <p>已优惠<span class="font-red">${{confirmData.redbagReduceAmount}}</span> {{$t('home.sfje')}}$<span class="payment-real">{{confirmData.realAmount}}</span></p>
+        <p>已优惠<span class="font-red">{{$t('$')}}{{confirmData.redbagReduceAmount}}</span> {{$t('home.sfje')}}{{$t('$')}}<span class="payment-real">{{confirmData.realAmount}}</span></p>
       </div>
       </div>
       
@@ -75,7 +75,7 @@
       <div class="settlement">
         <div class="settlement-zd">
           <div class="settlement-bg flex">
-            <div class="settlement-monery">$ {{ confirmData.realAmount }}</div>
+            <div class="settlement-monery">{{$t('$')}} {{ confirmData.realAmount }}</div>
             <div class="settlement-btn" @click="goPay()">{{$t("home.qrzf")}}</div>
           </div>
         </div>

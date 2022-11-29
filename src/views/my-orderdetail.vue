@@ -12,7 +12,7 @@
     <!-- <div class="details-box "> -->
       <div class="details-zh flexBetween padding10 navBg">
         <span >{{$t('home.xdsj')}}：<i class="colorRgb">{{item.tradeTime}}</i></span>
-        <span class="colorRgb">${{item.realAmount}}</span>
+        <span class="colorRgb">{{$t('$')}}{{item.totalAmount}}</span>
       </div>
       <ul class="details-item padding10">
         <li class="flex" v-for="(product,index) in item.productList" :key="index">
@@ -36,7 +36,7 @@
             </div>
           </div>
           <div>
-            <div class="details-monery">${{product.price}}</div>
+            <div class="details-monery">{{$t('$')}}{{(product.price * product.count).toFixed(2)}}</div>
             
           </div>
         </li>

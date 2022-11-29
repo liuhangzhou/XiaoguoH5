@@ -13,11 +13,11 @@
             </li>
             <li class="flex flex-vc flex-sc">
               <p>{{$t('home.zfje')}}</p>
-              <p>$ {{statusData.realAmount}}</p>
+              <p>{{$t('$')}} {{statusData.realAmount}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
               <p>{{$t('home.zje')}}</p>
-              <p>$ {{statusData.orderAmount}}</p>
+              <p>{{$t('$')}} {{statusData.orderAmount}}</p>
             </li>
             <li class="flex flex-vc flex-sc">
               <p>{{$t('home.xdsj')}}</p>

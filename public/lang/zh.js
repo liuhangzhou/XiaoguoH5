@@ -2,7 +2,7 @@
  * @Author: 江辉 jianghui@yit.com
  * @Date: 2021-03-19 16:32:04
  * @LastEditors: 江辉 jianghui@yit.com
- * @LastEditTime: 2022-11-22 23:48:30
+ * @LastEditTime: 2022-11-29 23:21:38
  * @FilePath: /XiaoguoH5/public/lang/zh.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -216,4 +216,5 @@ const zh = {
    'wode': '我的',
    'Immediately': '立即',
    'discount': '折',
+   '$': '￥',
 }
