@@ -197,4 +197,7 @@ const en = {
    'Immediately' : 'Immediately',
    'discount': 'discount',
    '$': '$',
+   'logout': 'logout',
+   'expire': 'expire',
+   'yky': 'can use',
 }

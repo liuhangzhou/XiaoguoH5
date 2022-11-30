@@ -51,8 +51,12 @@
                 {{$t('home.yhq')}}
               </p>
               <p class="font-red" style="color:red" v-if="!userToken" @click="goToLogin">{{$t('dianjidenglu')}}</p>
-              <div v-else-if="chosenCoupon != -1" class="font-red" style="color:#333" @click="couponPopup = true">-{{$t('$')}}  {{couponList[chosenCoupon].buyPrice}}</div>
-              <p class="font-red" style="color:#333" v-else @click="couponPopup = true">{{couponList.length}}{{$t('zhangkeyong')}}</p>
+              <div v-else="chosenCoupon != -1" class="payment-number-right flex flex-vc" @click="couponPopup = true">
+                  <div v-if="chosenCoupon != -1" class="coupon-number">-{{$t('$')}}{{couponList[chosenCoupon].buyPrice}}</div>
+                  <div v-else-if="(confirmData.reduceAmount && confirmData.reduceAmount != '0.00')" class="coupon-number">-{{$t('$')}}{{(confirmData.reduceAmount*1).toFixed(0)}}</div>
+                  <div v-else class="coupon-number">{{couponList.length}}{{$t('zhangkeyong')}}</div>
+                  <img style="margin-right:0;" src="../assets/img/ic_right.png" alt="">
+              </div>
             </li>
             <li class="flex flex-vc flex-sc">
               <p>{{$t('home.heji')}}</p>
@@ -62,7 +66,7 @@
         </div>
       </div>
       <div class="payment-monery">
-        <p>已优惠<span class="font-red">{{$t('$')}}{{confirmData.redbagReduceAmount}}</span> {{$t('home.sfje')}}{{$t('$')}}<span class="payment-real">{{confirmData.realAmount}}</span></p>
+        <p>{{$t('yiyouhui')}}<span class="font-red">{{$t('$')}}{{confirmData.totalReduceAmount}}</span> {{$t('home.sfje')}}{{$t('$')}}<span class="payment-real">{{confirmData.realAmount}}</span></p>
       </div>
       </div>
       
@@ -100,13 +104,13 @@
           <li class="flex flex-sc container" v-for="(item, index) in couponList" @click="handleClickCoupon(index)">
             <div class="flex flex-vc">
               <div class="coupon-price">
-                <span>{{item.buyPrice}}</span>{{$t('home.yuan')}}
+                {{$t('$')}}<span>{{item.buyPrice}}</span>
                 <p>{{$t('home.yhq')}}</p>
               </div>
               <div class="coupon-info">
                 <p class="coupon-name">{{item.title}}</p>
-                <p class="coupon-sy">满{{item.buyPrice}}元可用</p>
-                <p class="coupon-date">{{item.dateStr}} 到期</p>
+                <p class="coupon-sy">{{$t('home.man')}}{{item.buyPrice}}{{$t('yky')}}</p>
+                <p class="coupon-date">{{item.dateStr}} {{$t('expire')}}</p>
               </div>
             </div>
             <div class="flex flex-vc">
@@ -124,6 +128,7 @@
 <script>
 import { get, post } from '@/net/http'
 import api from "@/net/api"
+import util from "@/utils/util"
 export default {
   name: 'pay',
   data(){
@@ -162,13 +167,17 @@ export default {
   },
   methods: {
     getCouponMemberList(){
+      const mctCode = sessionStorage.getItem('mctCode') || '10000'
       get(api.couponMemberList,{
-        mctCode:this.mctCode,
+        mctCode:mctCode,
         msCode: this.msCode,
         type: 'nouse',
-        amount: this.confirmData.realAmount
+        amount: this.confirmData.realAmount,
       }).then(res=>{
-        res.nouseList = []
+        res.nouseList.forEach((item)=> {
+          item.dateStr = util.formatDate(item.dateStr, 'yyyy-MM-dd')
+          item.buyPrice = util.formatMoney(item.buyPrice, 0)
+        })
         this.couponList = res.nouseList || [];
       })
     },
@@ -180,12 +189,14 @@ export default {
         msCode: '10001',// 公共参数
         tableNo: '10',
         lang: 'cn',
-        tradeIds
+        tradeIds,
+        couponId: this.chosenCoupon != -1? this.couponList[this.chosenCoupon].id : '',
       }
       get(api.queryConfirm, params).then(res=> {
         res.count = tradeIds.split(',').length;
         res.tradeIds = params.tradeIds;
         this.confirmData = res;
+        this.getCouponMemberList();
       })
     },
     async queryPay(params) {
@@ -219,8 +230,17 @@ export default {
       this.$router.push('/login')
     },
     handleClickCoupon(index) {
-      this.chosenCoupon = index;
+      if(index === this.chosenCoupon) {
+        this.chosenCoupon =  -1;
+      } else {
+        this.chosenCoupon = index;
+      }
       this.couponPopup = false;
+      if(this.$route.query.tradeIds) {
+        this.payNow(this.$route.query.tradeIds);
+      } else {
+        this.payNow(this.confirmData.tradeIds)
+      }
     },
   }
 }
@@ -300,5 +320,27 @@ export default {
 }
 .coupon-date {
   font-size: .22rem;
+}
+.popup-title{
+  font-size: .4rem;
+  margin-top: .2rem;
+  text-align: center;
+  font-weight: 600;
+  color: #333333; 
+}
+
+.payment-number-right img{
+  width: .4rem;
+  display: block;
+}
+.payment-number-right .coupon-number{
+  width: 1.1rem;
+  height: .4rem;
+  background: #F93A4A;
+  border-radius: .06rem;
+  line-height: .4rem;
+  text-align: center;
+  font-size: .28rem;
+  color: #fff;
 }
 </style>

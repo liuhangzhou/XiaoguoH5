@@ -2,7 +2,7 @@
  * @Author: 江辉 jianghui@yit.com
  * @Date: 2021-01-28 14:11:14
  * @LastEditors: 江辉 jianghui@yit.com
- * @LastEditTime: 2022-11-20 23:46:22
+ * @LastEditTime: 2022-11-30 22:42:09
  * @FilePath: /XiaoguoH5/src/net/api.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -18,6 +18,7 @@ const api = {
   queryPay: 'cart/pay',//  支付结账页
   queryStatus: 'member/order/status',//  支付结果查询 
   queryCenter: 'member/center', // 个人中心
+  couponMemberList: 'coupon/member/list', // 用户可以使用的优惠券列表
 }
 
 export default api

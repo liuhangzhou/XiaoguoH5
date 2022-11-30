@@ -2,7 +2,7 @@
  * @Author: 江辉 jianghui@yit.com
  * @Date: 2021-02-01 17:08:40
  * @LastEditors: 江辉 jianghui@yit.com
- * @LastEditTime: 2022-11-30 01:07:14
+ * @LastEditTime: 2022-11-30 22:39:48
  * @FilePath: /XiaoguoH5/src/views/login.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -49,7 +49,7 @@ export default {
       try {
         const data = await get(api.queryLogin, params)
         sessionStorage.setItem('user',JSON.stringify(data))
-        this.$router.push('/home')
+        this.$router.back();
       } catch (e) {
         this.alertShow = true;
         this.alertText = this.$t('home.zhmmcw');

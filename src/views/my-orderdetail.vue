@@ -140,7 +140,8 @@ export default {
         tableNo: '10',
   //       token: '',
         lang: 'cn',
-        tradeIds
+        tradeIds,
+        couponId: '',
       }
       get(api.queryConfirm, params).then(res=> {
         res.count = this.orderList.length;

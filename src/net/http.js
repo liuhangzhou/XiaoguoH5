@@ -44,8 +44,11 @@ service.interceptors.request.use(
 
 // response interceptors
 service.interceptors.response.use(response => {
-  const { data: { code, desc, data } } = response
-  if (code === '0') {
+  let { data: { code, desc, data } } = response
+  if(!data) {
+    data = response.data;
+  }
+  if (code === '0' || code === 0) {
     return Promise.resolve(data)
   }else if(code == '40006') {
     sessionStorage.setItem('user','');

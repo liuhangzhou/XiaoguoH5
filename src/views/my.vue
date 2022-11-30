@@ -57,6 +57,15 @@
                   <img src="../assets/img/ic_right.png" alt="">
               </div>
           </li>
+          <li class="my-list flex flex-sc flex-vc " style="margin-top:.3rem" @click="handleClickLogin">
+              <div class="flex flex-vc">
+                  <van-icon name="setting-o" class="setting-icon"/>
+                  {{$t('logout')}}
+              </div>
+              <div class="icon-right">
+                  <img src="../assets/img/ic_right.png" alt="">
+              </div>
+          </li>
       </div>
   </div>
 </template>
@@ -90,7 +99,11 @@ export default {
       },
       goOrder(type) {
           this.$router.push('/myorder?type='+type)
-      }
+      },
+      handleClickLogin() {
+        this.centerData = {};
+        sessionStorage.removeItem('user')
+      },
   }
 }
 </script>
@@ -169,5 +182,9 @@ export default {
 .my-list img{
   height: .3rem;
   margin-right: .16rem;
+}
+.setting-icon{
+    font-size: .34rem;
+    margin-right: .12rem;
 }
 </style>
