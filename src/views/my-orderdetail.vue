@@ -129,6 +129,7 @@ export default {
       this.$router.go(-1)
     },
     payNow() {
+      this.getMyOrder();
       let tradeIds = '';
       this.orderList.forEach(order=> {
         tradeIds += order.tradeId + ','
@@ -143,13 +144,14 @@ export default {
         tradeIds,
         couponId: '',
       }
-      get(api.queryConfirm, params).then(res=> {
-        res.count = this.orderList.length;
-        res.tradeIds = params.tradeIds;
-        sessionStorage.setItem('confirmData',JSON.stringify(res))
-        this.$router.push('/pay')
-      })
-
+      setTimeout(()=> {
+        get(api.queryConfirm, params).then(res=> {
+          res.count = this.orderList.length;
+          res.tradeIds = params.tradeIds;
+          sessionStorage.setItem('confirmData',JSON.stringify(res))
+          this.$router.push('/pay')
+        })
+      },200)
     },
   }
 }

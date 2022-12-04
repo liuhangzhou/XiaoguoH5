@@ -1,6 +1,6 @@
 <template>
   <div class="warper">
-      <div class="user-info flex flex-vc" v-if="centerData.name" @click="toLogin">
+      <div class="user-info flex flex-vc" v-if="centerData.name">
           <div class="user-logo">
               <img src="../assets/img/ic_header.png" alt="">
           </div>
@@ -50,7 +50,7 @@
       <div class="container">
           <li class="my-list flex flex-sc flex-vc " @click="goProfile">
               <div class="flex flex-vc">
-                  <img src="../assets/img/ic_wdzl.png" alt="">
+                  <van-icon name="setting-o" class="setting-icon"/>
                   {{$t('wodeziliao')}}
               </div>
               <div class="icon-right">
@@ -59,7 +59,7 @@
           </li>
           <li class="my-list flex flex-sc flex-vc " style="margin-top:.3rem" @click="handleClickLogin">
               <div class="flex flex-vc">
-                  <van-icon name="setting-o" class="setting-icon"/>
+                <img src="../assets/img/icon_exit_black.png" class="setting-icon"/>
                   {{$t('logout')}}
               </div>
               <div class="icon-right">
@@ -103,6 +103,7 @@ export default {
       handleClickLogin() {
         this.centerData = {};
         sessionStorage.removeItem('user')
+        this.toLogin();
       },
   }
 }

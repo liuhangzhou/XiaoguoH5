@@ -1,30 +1,23 @@
-<!--
- * @Author: 江辉 jianghui@yit.com
- * @Date: 2021-02-01 17:08:40
- * @LastEditors: 江辉 jianghui@yit.com
- * @LastEditTime: 2022-11-30 22:39:48
- * @FilePath: /XiaoguoH5/src/views/login.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
   <div class="warper warper2">
-    <div class="details-box2">
-      <div class="details-zh between" >
-        <span @click="toHome">< {{$t("home.fhsy")}}</span>
-        <span style="margin-left:25%;">{{$t("home.denglu")}}/{{$t("home.zhuce")}}</span>
-        <span> &nbsp;</span>
-        </div>
+    <navBar :title="$t('home.denglu') + '/' + $t('home.zhuce')" />
+    <div class="login-title">{{ $t('zyddn') }}</div>
+    <div class="login-text">{{ $t('hysyzhmm') }}</div>
+    <div class="cont1">
+      <div class="cont-input">
+        <input type="text" maxlength="11" v-model="loginData.tel" :placeholder="$t('home.txsjh')">
+      </div>
+      <div class="cont-input flex flex-vc flex-sc">
+        <input :type="showPassword ? 'password' : 'text'" maxlength="16" v-model="loginData.password"
+          :placeholder="$t('home.srmm')">
+        <img src="../assets/img/ic_password.png" alt="" @click="showPassword = !showPassword">
+      </div>
     </div>
-    <div class="cont">
-     <p><span>{{$t("home.shouji")}}/{{$t("home.youxiang")}}</span><input type="text" v-model="loginData.tel" :placeholder="$t('home.txsjh')"></p>
-    <p><span>{{$t("home.mima")}}</span><input type="password" v-model="loginData.password"  :placeholder="$t('home.srmm') "></p>
-    </div>
-    <p class=" center radius10" @click="goLogin" style="width:2rem;background-color: rgb(242, 133, 18);margin:0 auto;" >{{$t('home.denglu')}}</p>
+    <div class="login-btn center" @click="goLogin">{{ $t('home.denglu') }}</div>
     <div class="goloign center">
-      <span style="color:#000;">{{$t('home.xlsk')}}？</span>
-      <span class="radius10" @click="goRegister">{{$t('home.quzhuce')}}</span>
+      <span style="color:#000;">{{ $t('home.xlsk') }}？</span>
+      <span @click="goRegister">{{ $t('home.quzhuce') }}</span>
     </div>
-    <alert :show.sync="alertShow" :text="alertText" :comfirm="changeAlertShow"/>
   </div>
 </template>
 
@@ -40,8 +33,7 @@ export default {
         tel:'',
         password:'',
       },
-      alertShow: false,
-      alertText: null,
+      showPassword: false,
     }
   },
   methods: {
@@ -51,8 +43,7 @@ export default {
         sessionStorage.setItem('user',JSON.stringify(data))
         this.$router.back();
       } catch (e) {
-        this.alertShow = true;
-        this.alertText = this.$t('home.zhmmcw');
+        this.$toast(this.$t('home.zhmmcw'));
       }
     },
     toHome() {
@@ -64,21 +55,19 @@ export default {
     changeAlertShow() {
       this.alertShow = false;
     },
-    goLogin(){
-      if(!this.loginData.tel){
-        this.alertShow = true;
-        this.alertText = this.$t('home.txsjh');
-         return;
-      }
-       if(!this.loginData.password){
-         this.alertShow = true;
-        this.alertText = this.$t('home.txmm');
+    goLogin() {
+      if (!this.loginData.tel) {
+        this.$toast(this.$t('home.txsjh'));
         return;
       }
-       let params = {
-          tel:this.loginData.tel,
-          password:this.loginData.password
-    }
+      if (!this.loginData.password) {
+        this.$toast(this.$t('home.txmm'));
+        return;
+      }
+      let params = {
+        tel: this.loginData.tel,
+        password: this.loginData.password
+      }
       this.queryLogin(params)
     }
   }
@@ -87,4 +76,50 @@ export default {
 
 <style scoped>
 
+.login-title {
+  margin: 1.2rem 0 .09rem .24rem;
+  font-weight: 800;
+  color: #111A34;
+  font-size: .54rem;
+}
+
+.login-text {
+  margin-left: .24rem;
+  font-size: .26rem;
+  font-weight: 400;
+  color: #111A34;
+}
+
+.cont-input {
+  padding: 0 .24rem;
+  height: .96rem;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.cont-input input {
+  display: block;
+  height: 100%;
+  border: 0;
+  font-size: .32rem;
+}
+
+.cont-input img {
+  width: .42rem;
+}
+
+.cont1 {
+  margin-top: .85rem;
+}
+
+.login-btn {
+  width: 7rem;
+  height: 1rem;
+  background: #FF8F1F;
+  border-radius: 8px;
+  color: #fff;
+  line-height: 1rem;
+  padding: 0;
+  font-weight: 500;
+  font-size: .36rem;
+}
 </style>

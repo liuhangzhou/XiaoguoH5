@@ -1,36 +1,44 @@
 <template>
   <div class="warper warper2">
-    <div class="details-box2">
-      <div class="details-zh between" >
-        <span style="margin:0 auto" >{{$t('home.zhuce')}}/{{$t('home.denglu')}}</span>
+    <navBar :title="$t('home.zhuce')+ '/' + $t('home.denglu')" />
+    <div class="container">
+      <van-field v-model="registerData.name" :label="$t('nicheng')" :placeholder="$t('qsrnc')" />
+      <div class="van-cell van-field">
+        <div class="van-cell__title van-field__label">
+          {{$t('home.xingbie')}}
         </div>
+        <van-radio-group v-model="registerData.sex" direction="horizontal">
+          <van-radio checked-color="#FF8F1F" name="1">{{$t('home.nan')}}</van-radio>
+          <van-radio checked-color="#FF8F1F" name="2">{{$t('home.nv')}}</van-radio>
+        </van-radio-group>
+      </div>
     </div>
-    <div class="cont cont2">
-      <p><span>{{$t('home.xingming')}}/{{$t('home.chenghu')}}</span><input type="text" v-model="registerData.name" :placeholder="$t('home.dhsr')"></p>
-      <p><span>{{$t('home.xingbie')}}</span>
-      <span class="toborder" style="width:1.58rem;text-align:center;color: #1890FF;border: 1px solid  rgb(0, 118, 255);" :class="activeIndex == index ? 'active' : ''" 
-        v-for="(item,index) in sexList" 
-        :key="index" 
-        @click="handleTap(index)">
-        {{item.name}}
-        </span></p>
-      <p><span>{{$t('home.shoujihao')}}</span><input type="text"  v-model="registerData.tel" :placeholder="$t('home.dhsr') "></p>
-      <p><span>{{$t('home.yanzhengma')}}</span>
-      <input type="text"  v-model="registerData.validateCode" style="width:30%;margin-right:.2rem">
-      <span class="colorWhite"  @click="identifyclick" style="color:#666;font-size:.24rem;">{{ iptValue }}</span>
-      </p>
-      <p><span>{{$t('home.youxiang')}}</span><input type="text"  v-model="registerData.email" :placeholder="$t('home.dhsr') "></p>
-      <p><span>{{$t('home.mima')}}</span><input type="password" v-model="registerData.password"  :placeholder="$t('home.dhsr') "></p>
-      <p><span>{{$t('home.qrmm')}}</span><input type="password" v-model="registerData.rePassword"  :placeholder="$t('home.dhsr') "></p>
+    <div class="container">
+      <van-field v-model="registerData.tel" type="tel" :label="$t('home.shoujihao')" :placeholder="$t('home.txsjh')" />
+      <van-field
+        v-model="registerData.validateCode"
+        center
+        clearable
+        :label="$t('home.yanzhengma')"
+        :placeholder="$t('srdxyzm')"
+      >
+        <template #button>
+          <div class="send-btn" @click="identifyclick" >
+            {{ iptValue }}
+          </div>
+        </template>
+      </van-field>
+      <van-field v-model="registerData.email" :label="$t('dzyx')" :placeholder="$t('srdzyx')" />
     </div>
-    <p class=" center center2"  >
-    <span class="radius10 color000 bcgWhite" style="background:#fff;border:1px solid #5b6b73;" @click="goHome"> {{$t('home.quxiao')}}</span><span class="radius10" @click="submit" style="background-color: rgb(242, 133, 18);"> {{$t('home.tijiao')}}</span></p>
+    <div class="container">
+      <van-field v-model="registerData.password" type="password" :label="$t('home.mima')" :placeholder="$t('home.srmm')" />
+      <van-field v-model="registerData.rePassword" type="password" :label="$t('home.qrmm')" :placeholder="$t('home.qrmm')" />
+    </div>
+    <div class="login-btn center" @click="submit">{{$t('home.tijiao')}}</div>
     <div class="goloign center">
       <span style="color:#000;">{{$t('home.yshy')}}？</span>
-      <span class="radius10" @click="gologin">{{$t('home.qudenglu')}}</span>
+      <span @click="gologin">{{$t('home.qudenglu')}}</span>
     </div>
-    <alert :show.sync="alertShow" :text="alertText" :comfirm="changeAlertShow"/>
-  
   </div>
 </template>
 
@@ -68,10 +76,7 @@ export default {
   mounted() {
   },
   methods: {
-    changeAlertShow() {
-      this.alertShow = false;
-    },
-     async querySendValidateCode(params) {
+    async querySendValidateCode(params) {
       try {
         const data = await post(api.querySendValidateCode, params)
         console.log(data,"data")
@@ -85,19 +90,17 @@ export default {
         setTimeout(()=>{
           this.gologin();
         },3000)
-        this.alertShow = true;
-        this.alertText = $t('home.zccg');
+        this.$toast(this.$t('home.zccg'));
       } catch (e) {
+        this.$toast(e.desc);
         console.log('e', e)
-        this.alertShow = true;
-        this.alertText = e.desc;
       }
     },
     gologin() {
-      this.$router.push('/login')
+      this.$router.replace('/login')
     },
     goHome() {
-      this.$router.push('/home')
+      this.$router.replace('/home')
     },
     handleTap(index) {
         this.activeIndex = index;  // 把当前点击元素的index，赋值给activeIndex
@@ -149,5 +152,35 @@ export default {
 </script>
 
 <style scoped>
+
+.warper{
+  min-height: 100vh;
+  background: #FAFAFA;
+}
+.container{
+  padding: 0;
+}
+.send-btn{
+  width: 1.6rem;
+  height: .5rem;
+  line-height: .5rem;
+  background: #FF8F1F;
+  border-radius: .1rem;
+  font-size: .24rem;
+  font-weight: 500;
+  text-align: center;
+  color: #fff;
+}
+.login-btn{
+  width: 7rem;
+  height: 1rem;
+  background: #FF8F1F;
+  border-radius: 8px;
+  color: #fff;
+  line-height: 1rem;
+  padding: 0;
+  font-weight: 500;
+  font-size: .36rem;
+}
 
 </style>
